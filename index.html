@@ -24,13 +24,18 @@
     header {
       width: 100%;
       background: #6b3e2e;
-      padding: 15px 20px;
+      padding: 12px 20px;
       position: absolute;
       top: 0;
       left: 0;
       box-sizing: border-box;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
+    /* TITOLO */
     .title {
       display: flex;
       align-items: center;
@@ -44,7 +49,28 @@
       font-size: 34px;
     }
 
-    /* RIQUADRO MARRONE PRINCIPALE */
+    /* DESTRA HEADER */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #f3c6d0;
+      font-size: 16px;
+    }
+
+    .search-icon {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .language {
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #f3c6d0;
+      border-radius: 10px;
+    }
+
+    /* RIQUADRO MARRONE */
     .container {
       background: #6b3e2e;
       padding: 40px;
@@ -55,7 +81,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
-    /* RIQUADRI ROSA */
+    /* CARD ROSA */
     .card {
       background: #f3c6d0;
       width: 200px;
@@ -93,6 +119,11 @@
     <div class="title">
       <span class="icon">Ψ</span>
       PsychoQuiz
+    </div>
+
+    <div class="header-right">
+      <div class="language">IT ▼</div>
+      <div class="search-icon">🔍</div>
     </div>
   </header>
 
