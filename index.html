@@ -8,10 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
+      font-family: Arial, sans-serif;
     }
 
     /* HEADER */
@@ -71,17 +72,47 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #f3c6d0;
     }
 
+    /* 🌸 LINGUA ROSA CON BANDIERA */
     .language {
-      border: 1px solid #f3c6d0;
-      padding: 4px 10px;
-      border-radius: 10px;
+      background: #f3c6d0;
+      color: #6b3e2e;
+      padding: 5px 10px;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
     }
 
+    .language:hover {
+      background: #e8a6b8;
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .lang-dropdown div {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .lang-dropdown div:hover {
+      background: #f3c6d0;
+    }
+
+    /* LENTE ROSA */
     .search-icon {
       color: #f3c6d0;
       font-size: 20px;
@@ -90,7 +121,7 @@
 
     /* HOME */
     .home {
-      display: none; /* 🔥 NASCOSTO DI DEFAULT */
+      display: none;
       flex-direction: column;
       align-items: center;
       gap: 20px;
@@ -148,8 +179,20 @@
     </div>
 
     <div class="header-right">
-      <div class="language">IT ▼</div>
+
+      <!-- LINGUA -->
+      <div class="language" onclick="toggleLang()">
+        🇮🇹 IT ▼
+
+        <div class="lang-dropdown" id="lang">
+          <div>🇮🇹 Italiano</div>
+          <div>🇬🇧 English</div>
+        </div>
+      </div>
+
+      <!-- LENTE -->
       <div class="search-icon">🔍</div>
+
     </div>
 
   </header>
@@ -187,6 +230,11 @@
 
     function hideHome() {
       document.getElementById("home").style.display = "none";
+    }
+
+    function toggleLang() {
+      const menu = document.getElementById("lang");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
   </script>
 
