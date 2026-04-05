@@ -93,6 +93,7 @@
       width: 120px;
     }
 
+    /* HOME */
     .home {
       display: none;
       flex-direction: column;
@@ -129,19 +130,26 @@
       margin-top: 6px;
     }
 
+    /* 🔥 MATERIE GRID PERFETTA */
     #materie {
       display: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
+      width: 100%;
       padding: 20px;
+      box-sizing: border-box;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      align-content: start;
     }
 
     #materie .card {
-      width: 180px;
-      height: 90px;
-      font-size: 14px;
+      width: 100%;
+      height: 80px;
+      font-size: 12px;
+      border-radius: 12px;
     }
+
   </style>
 </head>
 
@@ -183,7 +191,6 @@
     <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
   </div>
 
-  <!-- QUIZ PER MATERIA (FIXATO) -->
   <div class="card" onclick="showMaterie()">
     <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
   </div>
@@ -201,7 +208,7 @@
   <div class="card">Psichiatria</div>
   <div class="card">Psicologia dinamica</div>
   <div class="card">Storia della psicologia</div>
-  <div class="card">Psicologia del lavoro e delle organizzazioni</div>
+  <div class="card">Psicologia del lavoro e organizzazioni</div>
   <div class="card">Psicologia cognitiva</div>
   <div class="card">Neuroscienze</div>
   <div class="card">Psicometria</div>
@@ -224,7 +231,7 @@ function showHome() {
 
 function showMaterie() {
   document.getElementById("home").style.display = "none";
-  document.getElementById("materie").style.display = "flex";
+  document.getElementById("materie").style.display = "grid";
 }
 
 function hideHome() {
