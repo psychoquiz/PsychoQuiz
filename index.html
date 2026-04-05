@@ -22,9 +22,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-sizing: border-box;
     }
 
+    /* LOGO */
     .title {
       display: flex;
       align-items: center;
@@ -38,9 +38,11 @@
       font-size: 34px;
     }
 
+    /* MENU (TORNATO A SINISTRA) */
     .menu {
       display: flex;
       gap: 10px;
+      margin-left: 30px;
     }
 
     .menu-item {
@@ -56,6 +58,7 @@
       background: #e8a6b8;
     }
 
+    /* HEADER RIGHT */
     .header-right {
       display: flex;
       gap: 10px;
@@ -91,18 +94,16 @@
       width: 140px;
     }
 
-    /* HOME + MATERIE */
+    /* HOME + MATERIE BASE */
     .home {
       display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-top: 80px;
+      margin-top: 60px;
+      padding: 20px;
     }
 
+    /* CARD HOME */
     .card {
       background: #f3c6d0;
-      width: 280px;
       padding: 20px;
       border-radius: 16px;
       text-align: center;
@@ -118,20 +119,22 @@
       transform: scale(1.05);
     }
 
-    .subtitle {
-      font-size: 13px;
-      font-weight: normal;
-      margin-top: 5px;
-    }
-
-    /* MATERIE */
-    #materie {
-      display: none;
+    /* HOME LAYOUT */
+    #home {
+      display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
-      margin-top: 80px;
+      gap: 20px;
     }
+
+    /* 🔥 MATERIE GRID (NUOVO) */
+    #materie {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
   </style>
 </head>
 
@@ -139,15 +142,17 @@
 
 <header>
 
-  <div class="title">
-    <span class="icon">Ψ</span>
-    PsychoQuiz
-  </div>
+  <div style="display:flex; align-items:center;">
+    <div class="title">
+      <span class="icon">Ψ</span>
+      PsychoQuiz
+    </div>
 
-  <div class="menu">
-    <div class="menu-item" onclick="showHome()">Home</div>
-    <div class="menu-item" onclick="showMaterie()">Quiz</div>
-    <div class="menu-item">Risultati</div>
+    <div class="menu">
+      <div class="menu-item" onclick="showHome()">Home</div>
+      <div class="menu-item" onclick="showMaterie()">Quiz</div>
+      <div class="menu-item">Risultati</div>
+    </div>
   </div>
 
   <div class="header-right">
@@ -161,25 +166,16 @@
 <!-- HOME -->
 <div class="home" id="home">
 
-  <div class="card">
-    Casi clinici
-    <div class="subtitle">Analisi di casi reali e simulati</div>
-  </div>
+  <div class="card">Casi clinici</div>
 
-  <div class="card">
-    Quiz completo
-    <div class="subtitle">Tutte le materie di psicologia</div>
-  </div>
+  <div class="card">Quiz completo</div>
 
-  <div class="card" onclick="showMaterie()">
-    Quiz per materia
-    <div class="subtitle">Seleziona una disciplina</div>
-  </div>
+  <div class="card" onclick="showMaterie()">Quiz per materia</div>
 
 </div>
 
-<!-- MATERIE -->
-<div class="home" id="materie">
+<!-- MATERIE GRID -->
+<div id="materie">
 
   <div class="card">Psicologia generale</div>
   <div class="card">Psicologia sociale</div>
@@ -211,18 +207,12 @@ function showHome() {
 
 function showMaterie() {
   document.getElementById("home").style.display = "none";
-  document.getElementById("materie").style.display = "flex";
+  document.getElementById("materie").style.display = "grid";
 }
 
 function toggleSearch() {
   const box = document.getElementById("searchBox");
-
-  if (box.style.display === "block") {
-    box.style.display = "none";
-  } else {
-    box.style.display = "block";
-    box.focus();
-  }
+  box.style.display = box.style.display === "block" ? "none" : "block";
 }
 </script>
 
