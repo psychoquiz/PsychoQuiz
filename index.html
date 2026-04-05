@@ -12,6 +12,20 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      flex-direction: column;
+    }
+
+    header {
+      width: 100%;
+      background: #6b3e2e;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     .card {
@@ -22,15 +36,7 @@
       max-width: 400px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       text-align: center;
-    }
-
-    h1 {
-      color: #6b3e2e;
-    }
-
-    p {
-      color: #6b3e2e;
-      font-size: 18px;
+      margin-top: 80px;
     }
 
     button {
@@ -57,25 +63,21 @@
     }
   </style>
 </head>
+
 <body>
- <body>
 
-header {
-  width: 100%;
-  background: #6b3e2e;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 24px;
-  font-weight: bold;
-}
+  <header>
+    PsychoQuiz
+  </header>
 
-  <p>Domanda: Qual è la capitale d’Italia?</p>
+  <div class="card">
+    <p>Domanda: Qual è la capitale d’Italia?</p>
 
-  <button onclick="risposta('Roma')">Roma</button>
-  <button onclick="risposta('Milano')">Milano</button>
+    <button onclick="risposta('Roma')">Roma</button>
+    <button onclick="risposta('Milano')">Milano</button>
 
-  <p id="result"></p>
+    <p id="result"></p>
+  </div>
 
   <script>
     function risposta(val) {
@@ -86,5 +88,6 @@ header {
       }
     }
   </script>
+
 </body>
 </html>
