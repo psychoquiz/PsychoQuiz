@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PsychoQuiz</title>
+</head>
+<body>
+  <h1>PsychoQuiz 🧠</h1>
+
+  <p>Domanda: Qual è la capitale d’Italia?</p>
+
+  <button onclick="risposta('Roma')">Roma</button>
+  <button onclick="risposta('Milano')">Milano</button>
+
+  <p id="result"></p>
+
+  <script>
+    function risposta(val) {
+      if (val === "Roma") {
+        document.getElementById("result").innerText = "Corretto!";
+      } else {
+        document.getElementById("result").innerText = "Sbagliato!";
+      }
+    }
+  </script>
+</body>
+</html>
