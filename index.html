@@ -98,7 +98,7 @@
       margin-top: 80px;
     }
 
-    /* CARD HOME */
+    /* HOME CARD */
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -127,28 +127,28 @@
       margin-top: 6px;
     }
 
-    /* HOME LAYOUT */
-    #home {
-      display: flex;
-    }
-
     /* MATERIE */
     #materie {
-      display: none;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
     }
 
-    .materie-wrapper {
+    .materie-wrapper{
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 12px;
       width: 100%;
     }
 
-    #materieSearch {
+    .materie-topbar{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #materieSearch{
       width: 260px;
       padding: 8px 12px;
       border-radius: 12px;
@@ -156,10 +156,16 @@
       outline: none;
       text-align: center;
       font-size: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .materie-grid {
+    .multi-toggle{
+      font-size: 13px;
+      color: #6b3e2e;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .materie-grid{
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -167,10 +173,15 @@
       padding: 20px;
     }
 
-    #materie .card {
+    #materie .card{
       width: 170px;
       height: 60px;
       font-size: 15px;
+    }
+
+    .card.selected{
+      background: #6b3e2e;
+      color: #f3c6d0;
     }
 
   </style>
@@ -198,9 +209,7 @@
   <div class="header-right">
 
     <div class="language">IT ▼</div>
-
     <input id="searchBox" type="text" placeholder="Cerca...">
-
     <div class="search-icon" onclick="toggleSearch()">🔍</div>
 
   </div>
@@ -238,7 +247,15 @@
 
   <div class="materie-wrapper">
 
-    <input id="materieSearch" type="text" placeholder="Cerca materia...">
+    <div class="materie-topbar">
+
+      <input id="materieSearch" type="text" placeholder="Cerca materia...">
+
+      <div class="multi-toggle" onclick="toggleMultiMode()">
+        Clicca qui se vuoi selezionare più materie
+      </div>
+
+    </div>
 
     <div class="materie-grid">
 
@@ -256,7 +273,7 @@
       <div class="card">Psicometria</div>
       <div class="card">Sociologia</div>
       <div class="card">Teorie e tecniche del colloquio</div>
-      <div class="card">Teorie e tecniche dei test</div>
+      <div class="card">Test e tecniche dei test</div>
       <div class="card">Psicologia dell'adolescenza</div>
       <div class="card">Psicolinguistica</div>
       <div class="card">Filosofia della scienza</div>
@@ -292,16 +309,50 @@
     }
   }
 
-  // filtro materie
+  // SEARCH
   document.getElementById("materieSearch").addEventListener("input", function () {
     const value = this.value.toLowerCase();
-    const cards = document.querySelectorAll("#materie .card");
-
-    cards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(value) ? "flex" : "none";
+    document.querySelectorAll("#materie .card").forEach(card => {
+      card.style.display = card.innerText.toLowerCase().includes(value) ? "flex" : "none";
     });
   });
+
+  // MULTI MODE
+  let multiMode = false;
+  let selected = [];
+
+  function toggleMultiMode() {
+    multiMode = !multiMode;
+    selected = [];
+
+    document.querySelectorAll("#materie .card").forEach(card => {
+      card.classList.remove("selected");
+
+      card.onclick = function () {
+
+        if (!multiMode) {
+          alert("Hai scelto: " + this.innerText);
+          return;
+        }
+
+        if (this.classList.contains("selected")) {
+          this.classList.remove("selected");
+          selected = selected.filter(t => t !== this.innerText);
+        } else {
+          if (selected.length >= 6) {
+            alert("Massimo 6 materie");
+            return;
+          }
+          this.classList.add("selected");
+          selected.push(this.innerText);
+        }
+
+        console.log(selected);
+      };
+    });
+
+    alert(multiMode ? "Modalità multi attiva" : "Modalità singola attiva");
+  }
 
   showHome();
 
