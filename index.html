@@ -24,14 +24,29 @@
       width: 100%;
       background: #6b3e2e;
       color: #f3c6d0;
-      text-align: center;
-      padding: 15px 0;
+      padding: 15px 20px;
       font-size: 26px;
       font-family: "Rock Salt", cursive;
       position: absolute;
       top: 0;
       left: 0;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      box-sizing: border-box;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* LINGUA A DESTRA */
+    .lang-select {
+      background: #f3c6d0;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
     }
 
     .card {
@@ -78,14 +93,20 @@
 <body>
 
   <header>
-    PsychoQuiz
+    <div>PsychoQuiz</div>
+
+    <!-- MENU LINGUA -->
+    <select class="lang-select" onchange="cambiaLingua(this.value)">
+      <option value="it">IT 🇮🇹</option>
+      <option value="en">EN 🇬🇧</option>
+    </select>
   </header>
 
   <div class="card">
-    <p>Domanda: Qual è la capitale d’Italia?</p>
+    <p id="question">Domanda: Qual è la capitale d’Italia?</p>
 
-    <button onclick="risposta('Roma')">Roma</button>
-    <button onclick="risposta('Milano')">Milano</button>
+    <button onclick="risposta('Roma')" id="btn1">Roma</button>
+    <button onclick="risposta('Milano')" id="btn2">Milano</button>
 
     <p id="result"></p>
   </div>
@@ -98,10 +119,19 @@
         document.getElementById("result").innerText = "Sbagliato!";
       }
     }
-  </script>
 
-</body>
-</html>
+    function cambiaLingua(lang) {
+      if (lang === "en") {
+        document.getElementById("question").innerText = "Question: What is the capital of Italy?";
+        document.getElementById("btn1").innerText = "Rome";
+        document.getElementById("btn2").innerText = "Milan";
+      } else {
+        document.getElementById("question").innerText = "Domanda: Qual è la capitale d’Italia?";
+        document.getElementById("btn1").innerText = "Roma";
+        document.getElementById("btn2").innerText = "Milano";
+      }
+    }
+  </script>
 
 </body>
 </html>
