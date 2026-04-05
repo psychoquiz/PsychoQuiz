@@ -2,6 +2,60 @@
 <html>
 <head>
   <title>PsychoQuiz</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      color: #6b3e2e;
+    }
+
+    p {
+      color: #6b3e2e;
+      font-size: 18px;
+    }
+
+    button {
+      background: #e8a6b8;
+      border: none;
+      padding: 12px 20px;
+      margin: 8px;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #d17c93;
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #6b3e2e;
+    }
+  </style>
 </head>
 <body>
   <h1>PsychoQuiz 🧠</h1>
