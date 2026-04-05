@@ -3,7 +3,6 @@
 <head>
   <title>PsychoQuiz</title>
 
-  <!-- FONT SOLO TITOLO -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
@@ -15,7 +14,7 @@
       background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
     }
 
-    /* HEADER MARRONE */
+    /* HEADER */
     header {
       width: 100%;
       background: #6b3e2e;
@@ -27,7 +26,6 @@
       justify-content: space-between;
     }
 
-    /* LATO SINISTRO: LOGO + MENU */
     .left-header {
       display: flex;
       align-items: center;
@@ -69,7 +67,6 @@
       transform: scale(1.05);
     }
 
-    /* LINGUA + LENTE */
     .header-right {
       display: flex;
       align-items: center;
@@ -91,9 +88,9 @@
       cursor: pointer;
     }
 
-    /* HOME CENTER */
+    /* HOME */
     .home {
-      display: flex;
+      display: none; /* 🔥 NASCOSTO DI DEFAULT */
       flex-direction: column;
       align-items: center;
       gap: 20px;
@@ -143,9 +140,9 @@
       </div>
 
       <div class="menu">
-        <div class="menu-item">Home</div>
-        <div class="menu-item">Quiz</div>
-        <div class="menu-item">Risultati</div>
+        <div class="menu-item" onclick="showHome()">Home</div>
+        <div class="menu-item" onclick="hideHome()">Quiz</div>
+        <div class="menu-item" onclick="hideHome()">Risultati</div>
       </div>
 
     </div>
@@ -158,7 +155,7 @@
   </header>
 
   <!-- HOME -->
-  <div class="home">
+  <div class="home" id="home">
 
     <div class="card">
       <div>
@@ -182,6 +179,16 @@
     </div>
 
   </div>
+
+  <script>
+    function showHome() {
+      document.getElementById("home").style.display = "flex";
+    }
+
+    function hideHome() {
+      document.getElementById("home").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
