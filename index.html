@@ -130,24 +130,30 @@
       margin-top: 6px;
     }
 
-    /* 🔥 MATERIE GRID PERFETTA */
-    #materie {
+    /* 🔥 MATERIE DENTRO CARD */
+    .materie-grid {
       display: none;
+      margin-top: 10px;
       width: 100%;
-      padding: 20px;
-      box-sizing: border-box;
 
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      align-content: start;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
     }
 
-    #materie .card {
-      width: 100%;
-      height: 80px;
+    .materie-grid .mini-card {
+      background: #f7d4dd;
+      border-radius: 10px;
+      padding: 10px;
       font-size: 12px;
-      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .materie-grid .mini-card:hover {
+      background: #e8a6b8;
+      transform: scale(1.05);
     }
 
   </style>
@@ -166,8 +172,8 @@
 
     <div class="menu">
       <div class="menu-item" onclick="showHome()">Home</div>
-      <div class="menu-item" onclick="hideHome()">Quiz</div>
-      <div class="menu-item" onclick="hideHome()">Risultati</div>
+      <div class="menu-item">Quiz</div>
+      <div class="menu-item">Risultati</div>
     </div>
 
   </div>
@@ -191,34 +197,38 @@
     <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
   </div>
 
-  <div class="card" onclick="showMaterie()">
-    <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
+  <!-- QUIZ PER MATERIA -->
+  <div class="card" onclick="toggleMaterie()">
+    <div>
+      Quiz per materia
+      <div class="subtitle">Seleziona una disciplina</div>
+
+      <div class="materie-grid" id="materieGrid">
+
+        <div class="mini-card">Psicologia generale</div>
+        <div class="mini-card">Psicologia sociale</div>
+        <div class="mini-card">Psicologia dello sviluppo</div>
+        <div class="mini-card">Psicobiologia</div>
+        <div class="mini-card">Psicologia Clinica</div>
+        <div class="mini-card">Psichiatria</div>
+        <div class="mini-card">Psicologia dinamica</div>
+        <div class="mini-card">Storia della psicologia</div>
+        <div class="mini-card">Psicologia del lavoro</div>
+        <div class="mini-card">Psicologia cognitiva</div>
+        <div class="mini-card">Neuroscienze</div>
+        <div class="mini-card">Psicometria</div>
+        <div class="mini-card">Sociologia</div>
+        <div class="mini-card">Colloquio</div>
+        <div class="mini-card">Test psicologici</div>
+        <div class="mini-card">Adolescenza</div>
+        <div class="mini-card">Psicolinguistica</div>
+        <div class="mini-card">Filosofia della scienza</div>
+        <div class="mini-card">Psicologia Forense</div>
+
+      </div>
+
+    </div>
   </div>
-
-</div>
-
-<!-- MATERIE -->
-<div class="home" id="materie">
-
-  <div class="card">Psicologia generale</div>
-  <div class="card">Psicologia sociale</div>
-  <div class="card">Psicologia dello sviluppo</div>
-  <div class="card">Psicobiologia</div>
-  <div class="card">Psicologia Clinica</div>
-  <div class="card">Psichiatria</div>
-  <div class="card">Psicologia dinamica</div>
-  <div class="card">Storia della psicologia</div>
-  <div class="card">Psicologia del lavoro e organizzazioni</div>
-  <div class="card">Psicologia cognitiva</div>
-  <div class="card">Neuroscienze</div>
-  <div class="card">Psicometria</div>
-  <div class="card">Sociologia</div>
-  <div class="card">Teorie e tecniche del colloquio</div>
-  <div class="card">Teorie e tecniche dei test</div>
-  <div class="card">Psicologia dell'adolescenza</div>
-  <div class="card">Psicolinguistica</div>
-  <div class="card">Filosofia della scienza</div>
-  <div class="card">Psicologia Forense</div>
 
 </div>
 
@@ -226,17 +236,16 @@
 
 function showHome() {
   document.getElementById("home").style.display = "flex";
-  document.getElementById("materie").style.display = "none";
 }
 
-function showMaterie() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("materie").style.display = "grid";
-}
+function toggleMaterie() {
+  const grid = document.getElementById("materieGrid");
 
-function hideHome() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("materie").style.display = "none";
+  if (grid.style.display === "grid") {
+    grid.style.display = "none";
+  } else {
+    grid.style.display = "grid";
+  }
 }
 
 function toggleSearch() {
@@ -244,25 +253,10 @@ function toggleSearch() {
 
   if (box.style.display === "block") {
     box.style.display = "none";
-    box.value = "";
-    filterCards("");
   } else {
     box.style.display = "block";
     box.focus();
   }
-}
-
-document.getElementById("searchBox").addEventListener("input", function () {
-  filterCards(this.value.toLowerCase());
-});
-
-function filterCards(value) {
-  const cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(value) ? "flex" : "none";
-  });
 }
 
 </script>
