@@ -3,7 +3,7 @@
 <head>
   <title>PsychoQuiz</title>
 
-  <!-- FONT ROCK SALT -->
+  <!-- FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
@@ -31,16 +31,28 @@
       top: 0;
       left: 0;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
       box-sizing: border-box;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
 
+    /* TITOLO CON SIMBOLO */
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      font-size: 30px;
+    }
+
     /* LINGUA A DESTRA */
     .lang-select {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+
       background: #f3c6d0;
       border: none;
       padding: 6px 10px;
@@ -93,9 +105,11 @@
 <body>
 
   <header>
-    <div>PsychoQuiz</div>
+    <div class="title">
+      <span class="icon">Ψ</span>
+      PsychoQuiz
+    </div>
 
-    <!-- MENU LINGUA -->
     <select class="lang-select" onchange="cambiaLingua(this.value)">
       <option value="it">IT 🇮🇹</option>
       <option value="en">EN 🇬🇧</option>
@@ -125,10 +139,12 @@
         document.getElementById("question").innerText = "Question: What is the capital of Italy?";
         document.getElementById("btn1").innerText = "Rome";
         document.getElementById("btn2").innerText = "Milan";
+        document.getElementById("result").innerText = "";
       } else {
         document.getElementById("question").innerText = "Domanda: Qual è la capitale d’Italia?";
         document.getElementById("btn1").innerText = "Roma";
         document.getElementById("btn2").innerText = "Milano";
+        document.getElementById("result").innerText = "";
       }
     }
   </script>
