@@ -89,7 +89,7 @@
       width: 120px;
     }
 
-    /* HOME + MATERIE */
+    /* PAGINE */
     .page {
       display: none;
       flex-direction: column;
@@ -98,6 +98,7 @@
       margin-top: 80px;
     }
 
+    /* CARD HOME */
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -126,11 +127,13 @@
       margin-top: 6px;
     }
 
-    /* MATERIE LAYOUT */
+    /* 🔥 MATERIE GRID FIX */
     #materie {
+      flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
       padding: 20px;
     }
 
@@ -191,7 +194,6 @@
     </div>
   </div>
 
-  <!-- QUI LA MODIFICA IMPORTANTE -->
   <div class="card" onclick="showMaterie()">
     <div>
       Quiz per materia
@@ -250,7 +252,6 @@
     }
   }
 
-  // avvio
   showHome();
 
 </script>
