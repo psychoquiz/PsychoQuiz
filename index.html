@@ -97,7 +97,7 @@
 
     /* HOME */
     .home {
-      display: none;
+      display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
@@ -107,13 +107,10 @@
     /* MATERIE */
     #materie {
       display: none;
-      width: 100%;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
       padding: 20px;
-      flex-direction: row;
-      margin-top: 40px;
     }
 
     .card {
@@ -143,7 +140,6 @@
       font-weight: normal;
       margin-top: 6px;
     }
-
   </style>
 </head>
 
@@ -160,9 +156,8 @@
 
     <div class="menu">
       <div class="menu-item" onclick="showHome()">Home</div>
-      <div class="menu-item" onclick="hideAll()">Quiz</div>
-      <div class="menu-item" onclick="hideAll()">Risultati</div>
-      <div class="menu-item" onclick="showMaterie()">Quiz per materia</div>
+      <div class="menu-item">Quiz</div>
+      <div class="menu-item">Risultati</div>
     </div>
 
   </div>
@@ -190,14 +185,18 @@
     <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
   </div>
 
-  <div class="card">
-    <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
+  <!-- QUI È IL CLICK GIUSTO -->
+  <div class="card" onclick="showMaterie()">
+    <div>
+      Quiz per materia
+      <div class="subtitle">Seleziona una disciplina</div>
+    </div>
   </div>
 
 </div>
 
 <!-- MATERIE PAGE -->
-<div class="home" id="materie">
+<div id="materie">
 
   <div class="card" style="width:160px; height:90px; font-size:12px;">Psicologia generale</div>
   <div class="card" style="width:160px; height:90px; font-size:12px;">Psicologia sociale</div>
@@ -233,11 +232,6 @@
     document.getElementById("materie").style.display = "flex";
   }
 
-  function hideAll() {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("materie").style.display = "none";
-  }
-
   function toggleSearch() {
     const box = document.getElementById("searchBox");
 
@@ -263,9 +257,6 @@
       card.style.display = text.includes(value) ? "flex" : "none";
     });
   }
-
-  // START
-  showHome();
 
 </script>
 
