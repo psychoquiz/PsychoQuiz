@@ -3,11 +3,6 @@
 <head>
   <title>PsychoQuiz</title>
 
-  <!-- FONT -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
@@ -25,8 +20,6 @@
       width: 100%;
       background: #6b3e2e;
       padding: 15px 20px;
-      font-size: 20px;
-      font-family: "Rock Salt", cursive;
       position: absolute;
       top: 0;
       left: 0;
@@ -38,31 +31,36 @@
       box-sizing: border-box;
     }
 
-    /* TITOLO MARRONE */
+    /* TITOLO (SINISTRA) */
     .title {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #6b3e2e; /* marroncino */
+      color: #f3c6d0;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .icon {
-      font-size: 28px;
-      color: #6b3e2e;
+      font-size: 22px;
+      color: #f3c6d0;
     }
 
-    /* MENU */
+    /* MENU CENTRALE */
     .menu {
       display: flex;
-      gap: 15px;
+      gap: 12px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .menu a {
       text-decoration: none;
       color: #6b3e2e;
-      background: #f3c6d0; /* rosa */
-      padding: 6px 12px;
-      border-radius: 0px; /* squadrato */
+      background: #f3c6d0;
+      padding: 6px 14px;
+      border-radius: 12px; /* arrotondato */
       font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
@@ -73,17 +71,17 @@
       transform: scale(1.05);
     }
 
-    /* LINGUA */
+    /* LINGUA DESTRA */
     .lang-select {
       background: #f3c6d0;
       border: none;
       padding: 6px 10px;
-      border-radius: 0px;
+      border-radius: 10px;
       font-size: 14px;
       cursor: pointer;
     }
 
-    /* CARD */
+    /* CARD QUIZ */
     .card {
       background: white;
       padding: 30px;
