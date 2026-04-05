@@ -89,6 +89,7 @@
       width: 120px;
     }
 
+    /* PAGINE */
     .page {
       display: none;
       flex-direction: column;
@@ -97,6 +98,7 @@
       margin-top: 80px;
     }
 
+    /* HOME CARD */
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -251,6 +253,12 @@
 
   </div>
 
+  <div class="header-right">
+    <div class="language">IT ▼</div>
+    <input id="searchBox" type="text" placeholder="Cerca...">
+    <div class="search-icon" onclick="toggleSearch()">🔍</div>
+  </div>
+
 </header>
 
 <!-- HOME -->
@@ -287,13 +295,20 @@
       <option>difficile</option>
     </select>
 
+    <!-- 🔥 NUOVO -->
+    <label>Formato quiz</label>
+    <select id="format">
+      <option value="mcq">Crocette (4 opzioni)</option>
+      <option value="open">Risposta libera</option>
+    </select>
+
     <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
 
   </div>
 
 </div>
 
-<!-- MATERIE (RIPRISTINATE COMPLETAMENTE) -->
+<!-- MATERIE (INVARIATO) -->
 <div class="page" id="materie">
 
   <div class="materie-wrapper">
@@ -359,7 +374,16 @@ function showQuizConfig() {
 }
 
 function startQuiz() {
-  alert("Quiz avviato");
+  const num = document.getElementById("numQ").value;
+  const diff = document.getElementById("diff").value;
+  const format = document.getElementById("format").value;
+
+  alert(
+    "Quiz avviato!\n" +
+    "Domande: " + num + "\n" +
+    "Difficoltà: " + diff + "\n" +
+    "Formato: " + (format === "mcq" ? "Crocette" : "Risposta libera")
+  );
 }
 
 let multiMode = false;
