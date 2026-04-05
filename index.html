@@ -20,39 +20,58 @@
       flex-direction: column;
     }
 
+    /* HEADER */
     header {
       width: 100%;
       background: #6b3e2e;
       color: #f3c6d0;
       padding: 15px 20px;
-      font-size: 26px;
+      font-size: 20px;
       font-family: "Rock Salt", cursive;
       position: absolute;
       top: 0;
       left: 0;
 
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       box-sizing: border-box;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
 
-    /* TITOLO CON SIMBOLO */
+    /* SINISTRA */
     .title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .icon {
-      font-size: 30px;
+      font-size: 28px;
     }
 
-    /* LINGUA A DESTRA */
-    .lang-select {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
+    /* MENU CENTRALE DENTRO HEADER */
+    .menu {
+      display: flex;
+      gap: 25px;
+    }
 
+    .menu a {
+      color: #f3c6d0;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      transform: scale(1.1);
+      color: white;
+    }
+
+    /* LINGUA DESTRA */
+    .lang-select {
       background: #f3c6d0;
       border: none;
       padding: 6px 10px;
@@ -61,6 +80,7 @@
       cursor: pointer;
     }
 
+    /* CARD */
     .card {
       background: white;
       padding: 30px;
@@ -105,22 +125,33 @@
 <body>
 
   <header>
+
+    <!-- SINISTRA -->
     <div class="title">
       <span class="icon">Ψ</span>
       PsychoQuiz
     </div>
 
-    <select class="lang-select" onchange="cambiaLingua(this.value)">
-      <option value="it">IT 🇮🇹</option>
-      <option value="en">EN 🇬🇧</option>
+    <!-- CENTRO MENU -->
+    <div class="menu">
+      <a>Home</a>
+      <a>Quiz</a>
+      <a>Risultati</a>
+    </div>
+
+    <!-- DESTRA -->
+    <select class="lang-select">
+      <option>IT 🇮🇹</option>
+      <option>EN 🇬🇧</option>
     </select>
+
   </header>
 
   <div class="card">
-    <p id="question">Domanda: Qual è la capitale d’Italia?</p>
+    <p>Domanda: Qual è la capitale d’Italia?</p>
 
-    <button onclick="risposta('Roma')" id="btn1">Roma</button>
-    <button onclick="risposta('Milano')" id="btn2">Milano</button>
+    <button onclick="risposta('Roma')">Roma</button>
+    <button onclick="risposta('Milano')">Milano</button>
 
     <p id="result"></p>
   </div>
@@ -131,20 +162,6 @@
         document.getElementById("result").innerText = "Corretto!";
       } else {
         document.getElementById("result").innerText = "Sbagliato!";
-      }
-    }
-
-    function cambiaLingua(lang) {
-      if (lang === "en") {
-        document.getElementById("question").innerText = "Question: What is the capital of Italy?";
-        document.getElementById("btn1").innerText = "Rome";
-        document.getElementById("btn2").innerText = "Milan";
-        document.getElementById("result").innerText = "";
-      } else {
-        document.getElementById("question").innerText = "Domanda: Qual è la capitale d’Italia?";
-        document.getElementById("btn1").innerText = "Roma";
-        document.getElementById("btn2").innerText = "Milano";
-        document.getElementById("result").innerText = "";
       }
     }
   </script>
