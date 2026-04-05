@@ -9,44 +9,35 @@
 
   <style>
     html, body {
-      height: 100%;
       margin: 0;
-      background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
+      height: 100%;
       font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
     }
 
     /* HEADER */
     header {
-      width: 100%;
       background: #6b3e2e;
       padding: 10px 20px;
-      box-sizing: border-box;
-
       display: flex;
-      align-items: center;
       justify-content: space-between;
-    }
-
-    .left-header {
-      display: flex;
       align-items: center;
-      gap: 25px;
+      box-sizing: border-box;
     }
 
     .title {
       display: flex;
       align-items: center;
       gap: 10px;
-      color: #f3c6d0;
       font-family: "Emilys Candy", serif;
       font-size: 32px;
+      color: #f3c6d0;
     }
 
     .icon {
       font-size: 34px;
     }
 
-    /* MENU */
     .menu {
       display: flex;
       gap: 10px;
@@ -57,51 +48,50 @@
       color: #6b3e2e;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
+      font-weight: bold;
     }
 
     .menu-item:hover {
       background: #e8a6b8;
-      transform: scale(1.05);
     }
 
     .header-right {
       display: flex;
-      align-items: center;
       gap: 10px;
+      align-items: center;
     }
 
-    /* LINGUA */
     .language {
       background: #f3c6d0;
       color: #6b3e2e;
       padding: 5px 10px;
       border-radius: 12px;
       cursor: pointer;
-      font-size: 14px;
     }
 
-    /* LENTE */
-    .search-icon {
-      color: #f3c6d0;
-      font-size: 20px;
+    .search-btn {
+      background: #f3c6d0;
+      color: #6b3e2e;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
     }
 
-    /* SEARCH BOX */
     #searchBox {
       display: none;
-      padding: 5px 10px;
+      padding: 6px 10px;
       border-radius: 10px;
       border: none;
       outline: none;
-      width: 120px;
+      width: 140px;
     }
 
-    /* HOME */
+    /* HOME + MATERIE */
     .home {
       display: none;
       flex-direction: column;
@@ -112,15 +102,11 @@
 
     .card {
       background: #f3c6d0;
-      width: 260px;
-      height: 140px;
+      width: 280px;
+      padding: 20px;
       border-radius: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       text-align: center;
       color: #6b3e2e;
-      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       transition: 0.2s;
@@ -135,95 +121,110 @@
     .subtitle {
       font-size: 13px;
       font-weight: normal;
-      margin-top: 6px;
+      margin-top: 5px;
+    }
+
+    /* MATERIE */
+    #materie {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 80px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
+<header>
 
-    <div class="left-header">
-
-      <div class="title">
-        <span class="icon">Ψ</span>
-        PsychoQuiz
-      </div>
-
-      <div class="menu">
-        <div class="menu-item" onclick="showHome()">Home</div>
-        <div class="menu-item" onclick="hideHome()">Quiz</div>
-        <div class="menu-item" onclick="hideHome()">Risultati</div>
-      </div>
-
-    </div>
-
-    <div class="header-right">
-
-      <div class="language">IT ▼</div>
-
-      <input id="searchBox" type="text" placeholder="Cerca...">
-
-      <div class="search-icon" onclick="toggleSearch()">🔍</div>
-
-    </div>
-
-  </header>
-
-  <!-- HOME -->
-  <div class="home" id="home">
-
-    <div class="card">
-      <div>Casi clinici<div class="subtitle">Analisi di casi reali e simulati</div></div>
-    </div>
-
-    <div class="card">
-      <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
-    </div>
-
-    <div class="card">
-      <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
-    </div>
-
+  <div class="title">
+    <span class="icon">Ψ</span>
+    PsychoQuiz
   </div>
 
-  <script>
-    function showHome() {
-      document.getElementById("home").style.display = "flex";
-    }
+  <div class="menu">
+    <div class="menu-item" onclick="showHome()">Home</div>
+    <div class="menu-item" onclick="showMaterie()">Quiz</div>
+    <div class="menu-item">Risultati</div>
+  </div>
 
-    function hideHome() {
-      document.getElementById("home").style.display = "none";
-    }
+  <div class="header-right">
+    <div class="language">IT ▼</div>
+    <div class="search-btn" onclick="toggleSearch()">🔍</div>
+    <input id="searchBox" type="text" placeholder="Cerca...">
+  </div>
 
-    function toggleSearch() {
-      const box = document.getElementById("searchBox");
+</header>
 
-      if (box.style.display === "block") {
-        box.style.display = "none";
-        box.value = "";
-        filterCards("");
-      } else {
-        box.style.display = "block";
-        box.focus();
-      }
-    }
+<!-- HOME -->
+<div class="home" id="home">
 
-    document.getElementById("searchBox").addEventListener("input", function () {
-      filterCards(this.value.toLowerCase());
-    });
+  <div class="card">
+    Casi clinici
+    <div class="subtitle">Analisi di casi reali e simulati</div>
+  </div>
 
-    function filterCards(value) {
-      const cards = document.querySelectorAll(".card");
+  <div class="card">
+    Quiz completo
+    <div class="subtitle">Tutte le materie di psicologia</div>
+  </div>
 
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(value) ? "flex" : "none";
-      });
-    }
-  </script>
+  <div class="card" onclick="showMaterie()">
+    Quiz per materia
+    <div class="subtitle">Seleziona una disciplina</div>
+  </div>
+
+</div>
+
+<!-- MATERIE -->
+<div class="home" id="materie">
+
+  <div class="card">Psicologia generale</div>
+  <div class="card">Psicologia sociale</div>
+  <div class="card">Psicologia dello sviluppo</div>
+  <div class="card">Psicobiologia</div>
+  <div class="card">Psicologia Clinica</div>
+  <div class="card">Psichiatria</div>
+  <div class="card">Psicologia dinamica</div>
+  <div class="card">Storia della psicologia</div>
+  <div class="card">Psicologia del lavoro e delle organizzazioni</div>
+  <div class="card">Psicologia cognitiva</div>
+  <div class="card">Neuroscienze</div>
+  <div class="card">Psicometria</div>
+  <div class="card">Sociologia</div>
+  <div class="card">Teorie e tecniche del colloquio</div>
+  <div class="card">Teorie e tecniche dei test</div>
+  <div class="card">Psicologia dell'adolescenza</div>
+  <div class="card">Psicolinguistica</div>
+  <div class="card">Filosofia della scienza</div>
+  <div class="card">Psicologia Forense</div>
+
+</div>
+
+<script>
+function showHome() {
+  document.getElementById("home").style.display = "flex";
+  document.getElementById("materie").style.display = "none";
+}
+
+function showMaterie() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "flex";
+}
+
+function toggleSearch() {
+  const box = document.getElementById("searchBox");
+
+  if (box.style.display === "block") {
+    box.style.display = "none";
+  } else {
+    box.style.display = "block";
+    box.focus();
+  }
+}
+</script>
 
 </body>
 </html>
