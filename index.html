@@ -71,10 +71,10 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    /* 🌸 LINGUA ROSA CON BANDIERA */
+    /* LINGUA */
     .language {
       background: #f3c6d0;
       color: #6b3e2e;
@@ -82,41 +82,23 @@
       border-radius: 12px;
       cursor: pointer;
       font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      position: relative;
     }
 
-    .language:hover {
-      background: #e8a6b8;
-    }
-
-    .lang-dropdown {
-      display: none;
-      position: absolute;
-      top: 35px;
-      right: 0;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .lang-dropdown div {
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-
-    .lang-dropdown div:hover {
-      background: #f3c6d0;
-    }
-
-    /* LENTE ROSA */
+    /* LENTE */
     .search-icon {
       color: #f3c6d0;
       font-size: 20px;
       cursor: pointer;
+    }
+
+    /* SEARCH BOX */
+    #searchBox {
+      display: none;
+      padding: 5px 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      width: 120px;
     }
 
     /* HOME */
@@ -180,18 +162,11 @@
 
     <div class="header-right">
 
-      <!-- LINGUA -->
-      <div class="language" onclick="toggleLang()">
-        🇮🇹 IT ▼
+      <div class="language">IT ▼</div>
 
-        <div class="lang-dropdown" id="lang">
-          <div>🇮🇹 Italiano</div>
-          <div>🇬🇧 English</div>
-        </div>
-      </div>
+      <input id="searchBox" type="text" placeholder="Cerca...">
 
-      <!-- LENTE -->
-      <div class="search-icon">🔍</div>
+      <div class="search-icon" onclick="toggleSearch()">🔍</div>
 
     </div>
 
@@ -201,24 +176,15 @@
   <div class="home" id="home">
 
     <div class="card">
-      <div>
-        Casi clinici
-        <div class="subtitle">Analisi di casi reali e simulati</div>
-      </div>
+      <div>Casi clinici<div class="subtitle">Analisi di casi reali e simulati</div></div>
     </div>
 
     <div class="card">
-      <div>
-        Quiz completo
-        <div class="subtitle">Tutte le materie di psicologia</div>
-      </div>
+      <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
     </div>
 
     <div class="card">
-      <div>
-        Quiz per materia
-        <div class="subtitle">Seleziona una disciplina</div>
-      </div>
+      <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
     </div>
 
   </div>
@@ -232,9 +198,30 @@
       document.getElementById("home").style.display = "none";
     }
 
-    function toggleLang() {
-      const menu = document.getElementById("lang");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    function toggleSearch() {
+      const box = document.getElementById("searchBox");
+
+      if (box.style.display === "block") {
+        box.style.display = "none";
+        box.value = "";
+        filterCards("");
+      } else {
+        box.style.display = "block";
+        box.focus();
+      }
+    }
+
+    document.getElementById("searchBox").addEventListener("input", function () {
+      filterCards(this.value.toLowerCase());
+    });
+
+    function filterCards(value) {
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(value) ? "flex" : "none";
+      });
     }
   </script>
 
