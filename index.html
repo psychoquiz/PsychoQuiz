@@ -20,7 +20,6 @@
       background: #6b3e2e;
       padding: 10px 20px;
       box-sizing: border-box;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -41,9 +40,7 @@
       font-size: 32px;
     }
 
-    .icon {
-      font-size: 34px;
-    }
+    .icon { font-size: 34px; }
 
     .menu {
       display: flex;
@@ -132,11 +129,9 @@
       margin-top: 6px;
     }
 
-    /* 🔥 MATERIE GRID PICCOLA */
     #materie {
       display: none;
       flex-wrap: wrap;
-      flex-direction: row;
       justify-content: center;
       gap: 12px;
       padding: 20px;
@@ -147,7 +142,6 @@
       height: 90px;
       font-size: 14px;
     }
-
   </style>
 </head>
 
@@ -179,7 +173,7 @@
 </header>
 
 <!-- HOME -->
-<div class="home" id="home">
+<div class="home" id="home" style="display:flex;">
 
   <div class="card">
     <div>Casi clinici<div class="subtitle">Analisi di casi reali e simulati</div></div>
@@ -189,7 +183,8 @@
     <div>Quiz completo<div class="subtitle">Tutte le materie di psicologia</div></div>
   </div>
 
-  <div class="card">
+  <!-- QUIZ PER MATERIA (FIXATO) -->
+  <div class="card" onclick="showMaterie()">
     <div>Quiz per materia<div class="subtitle">Seleziona una disciplina</div></div>
   </div>
 
@@ -221,13 +216,20 @@
 </div>
 
 <script>
+
 function showHome() {
   document.getElementById("home").style.display = "flex";
   document.getElementById("materie").style.display = "none";
 }
 
+function showMaterie() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "flex";
+}
+
 function hideHome() {
   document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "none";
 }
 
 function toggleSearch() {
@@ -255,6 +257,7 @@ function filterCards(value) {
     card.style.display = text.includes(value) ? "flex" : "none";
   });
 }
+
 </script>
 
 </body>
