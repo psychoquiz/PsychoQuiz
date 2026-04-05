@@ -184,6 +184,18 @@
       color: #f3c6d0;
     }
 
+    /* BOTTON QUIZ */
+    #startQuizBtn{
+      display:none;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background:#6b3e2e;
+      color:#f3c6d0;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
   </style>
 </head>
 
@@ -281,6 +293,8 @@
 
     </div>
 
+    <div id="startQuizBtn">Inizia quiz</div>
+
   </div>
 
 </div>
@@ -309,7 +323,6 @@
     }
   }
 
-  // SEARCH
   document.getElementById("materieSearch").addEventListener("input", function () {
     const value = this.value.toLowerCase();
     document.querySelectorAll("#materie .card").forEach(card => {
@@ -317,13 +330,24 @@
     });
   });
 
-  // MULTI MODE
   let multiMode = false;
   let selected = [];
+
+  function updateStartButton() {
+    const btn = document.getElementById("startQuizBtn");
+
+    if (selected.length > 0) {
+      btn.style.display = "block";
+      btn.innerText = "Inizia quiz (" + selected.length + " materie selezionate)";
+    } else {
+      btn.style.display = "none";
+    }
+  }
 
   function toggleMultiMode() {
     multiMode = !multiMode;
     selected = [];
+    updateStartButton();
 
     document.querySelectorAll("#materie .card").forEach(card => {
       card.classList.remove("selected");
@@ -347,12 +371,14 @@
           selected.push(this.innerText);
         }
 
-        console.log(selected);
+        updateStartButton();
       };
     });
-
-    alert(multiMode ? "Modalità multi attiva" : "Modalità singola attiva");
   }
+
+  document.getElementById("startQuizBtn").onclick = function () {
+    alert("Quiz avviato con: " + selected.join(", "));
+  };
 
   showHome();
 
