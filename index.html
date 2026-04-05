@@ -143,6 +143,19 @@
       font-size: 16px;
     }
 
+    /* 🔍 SEARCH MATERIE */
+    #materieSearch {
+      width: 260px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
   </style>
 </head>
 
@@ -206,6 +219,9 @@
 <!-- MATERIE -->
 <div class="page" id="materie">
 
+  <!-- 🔍 SEARCH BAR MATERIE -->
+  <input id="materieSearch" type="text" placeholder="Cerca materia...">
+
   <div class="card">Psicologia generale</div>
   <div class="card">Psicologia sociale</div>
   <div class="card">Psicologia dello sviluppo</div>
@@ -251,6 +267,17 @@
       box.focus();
     }
   }
+
+  // 🔍 filtro materie
+  document.getElementById("materieSearch").addEventListener("input", function () {
+    const value = this.value.toLowerCase();
+    const cards = document.querySelectorAll("#materie .card");
+
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(value) ? "flex" : "none";
+    });
+  });
 
   showHome();
 
