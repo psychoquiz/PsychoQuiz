@@ -24,7 +24,6 @@
     header {
       width: 100%;
       background: #6b3e2e;
-      color: #f3c6d0;
       padding: 15px 20px;
       font-size: 20px;
       font-family: "Rock Salt", cursive;
@@ -37,45 +36,49 @@
       justify-content: space-between;
 
       box-sizing: border-box;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
 
-    /* SINISTRA */
+    /* TITOLO MARRONE */
     .title {
       display: flex;
       align-items: center;
       gap: 8px;
+      color: #6b3e2e; /* marroncino */
     }
 
     .icon {
       font-size: 28px;
+      color: #6b3e2e;
     }
 
-    /* MENU CENTRALE DENTRO HEADER */
+    /* MENU */
     .menu {
       display: flex;
-      gap: 25px;
+      gap: 15px;
     }
 
     .menu a {
-      color: #f3c6d0;
       text-decoration: none;
-      font-size: 16px;
+      color: #6b3e2e;
+      background: #f3c6d0; /* rosa */
+      padding: 6px 12px;
+      border-radius: 0px; /* squadrato */
+      font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
     }
 
     .menu a:hover {
-      transform: scale(1.1);
-      color: white;
+      background: #e8a6b8;
+      transform: scale(1.05);
     }
 
-    /* LINGUA DESTRA */
+    /* LINGUA */
     .lang-select {
       background: #f3c6d0;
       border: none;
       padding: 6px 10px;
-      border-radius: 8px;
+      border-radius: 0px;
       font-size: 14px;
       cursor: pointer;
     }
