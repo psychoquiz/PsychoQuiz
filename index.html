@@ -110,6 +110,15 @@
       margin-top: 80px;
     }
 
+    /* MATERIE (NUOVO) */
+    .materie {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 80px;
+    }
+
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -154,8 +163,9 @@
 
       <div class="menu">
         <div class="menu-item" onclick="showHome()">Home</div>
-        <div class="menu-item" onclick="hideHome()">Quiz</div>
-        <div class="menu-item" onclick="hideHome()">Risultati</div>
+        <div class="menu-item" onclick="hideAll()">Quiz</div>
+        <div class="menu-item" onclick="hideAll()">Risultati</div>
+        <div class="menu-item" onclick="showMaterie()">Quiz per materia</div>
       </div>
 
     </div>
@@ -189,13 +199,32 @@
 
   </div>
 
+  <!-- MATERIE -->
+  <div class="materie" id="materie">
+
+    <div class="card">Psicologia generale</div>
+    <div class="card">Neuroscienze</div>
+    <div class="card">Psicologia clinica</div>
+    <div class="card">Psicologia dello sviluppo</div>
+    <div class="card">Psicologia sociale</div>
+    <div class="card">Psicopatologia</div>
+
+  </div>
+
   <script>
     function showHome() {
       document.getElementById("home").style.display = "flex";
+      document.getElementById("materie").style.display = "none";
     }
 
-    function hideHome() {
+    function showMaterie() {
       document.getElementById("home").style.display = "none";
+      document.getElementById("materie").style.display = "flex";
+    }
+
+    function hideAll() {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("materie").style.display = "none";
     }
 
     function toggleSearch() {
