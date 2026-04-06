@@ -417,17 +417,17 @@ function updateSubjectCounts() {
 
     const name = card.innerText.replace(/\s\(\d+\)/, "").trim();
 
-    const count = questionsBySubject[name]?.length || 0;
+/* inizializza subito */
+function updateSubjectCounts() {
+  document.querySelectorAll("#materie .card").forEach(card => {
 
-    // NON distruggiamo struttura, solo aggiorniamo testo
-    card.innerHTML = `
-      ${name} <span style="opacity:0.6">(${count})</span>
-    `;
+    const name = card.innerText.replace(/\s\(\d+\)/, "").trim();
+
+    const count = (window.questionsBySubject?.[name]?.length) || 0;
+
+    card.innerHTML = `${name} <span style="opacity:0.6">(${count})</span>`;
   });
 }
-
-/* inizializza subito */
-updateSubjectCounts();
 setTimeout(updateSubjectCounts, 50);
 /* MULTI SELECT */
 let multiMode = false;
