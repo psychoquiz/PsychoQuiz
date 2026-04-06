@@ -40,14 +40,9 @@
       font-size: 32px;
     }
 
-    .icon {
-      font-size: 34px;
-    }
+    .icon { font-size: 34px; }
 
-    .menu {
-      display: flex;
-      gap: 10px;
-    }
+    .menu { display: flex; gap: 10px; }
 
     .menu-item {
       background: #f3c6d0;
@@ -89,7 +84,6 @@
       width: 120px;
     }
 
-    /* PAGINE */
     .page {
       display: none;
       flex-direction: column;
@@ -98,7 +92,6 @@
       margin-top: 80px;
     }
 
-    /* HOME CARD */
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -121,17 +114,14 @@
       transform: scale(1.05);
     }
 
-    .subtitle {
-      font-size: 13px;
-      font-weight: normal;
-      margin-top: 6px;
+    .card.selected {
+      background: #6b3e2e;
+      color: #f3c6d0;
     }
 
-    /* MATERIE */
-    #materie {
-      flex-direction: column;
-      align-items: center;
-    }
+    .subtitle { font-size: 13px; font-weight: normal; margin-top: 6px; }
+
+    #materie { flex-direction: column; align-items: center; }
 
     .materie-wrapper {
       display: flex;
@@ -193,12 +183,6 @@
       font-size: 15px;
     }
 
-    .card.selected {
-      background: #6b3e2e;
-      color: #f3c6d0;
-    }
-
-    /* QUIZ CONFIG */
     #quizConfig {
       display: none;
       flex-direction: column;
@@ -237,41 +221,27 @@
 <body>
 
 <header>
-
   <div class="left-header">
-
-    <div class="title">
-      <span class="icon">Ψ</span>
-      PsychoQuiz
-    </div>
-
+    <div class="title"><span class="icon">Ψ</span> PsychoQuiz</div>
     <div class="menu">
       <div class="menu-item" onclick="showHome()">Home</div>
       <div class="menu-item">Quiz</div>
       <div class="menu-item">Risultati</div>
     </div>
-
   </div>
 
   <div class="header-right">
     <div class="language">IT ▼</div>
     <input id="searchBox" type="text" placeholder="Cerca...">
-    <div class="search-icon" onclick="toggleSearch()">🔍</div>
+    <div class="search-icon">🔍</div>
   </div>
-
 </header>
 
 <!-- HOME -->
 <div class="page" id="home" style="display:flex;">
-
   <div class="card">Casi clinici</div>
-
   <div class="card" onclick="showQuizConfig()">Quiz completo</div>
-
-  <div class="card" onclick="showMaterie()">
-    Quiz per materia
-  </div>
-
+  <div class="card" onclick="showMaterie()">Quiz per materia</div>
 </div>
 
 <!-- QUIZ CONFIG -->
@@ -280,6 +250,9 @@
   <div class="config-box">
 
     <h3>Configura quiz</h3>
+
+    <div id="selectedMaterieLabel"
+         style="margin-bottom:10px; font-size:13px; color:#6b3e2e;"></div>
 
     <label>Numero domande</label>
     <select id="numQ">
@@ -295,7 +268,6 @@
       <option>difficile</option>
     </select>
 
-    <!-- 🔥 NUOVO -->
     <label>Formato quiz</label>
     <select id="format">
       <option value="mcq">Crocette (4 opzioni)</option>
@@ -305,10 +277,9 @@
     <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
 
   </div>
-
 </div>
 
-<!-- MATERIE (INVARIATO) -->
+<!-- MATERIE -->
 <div class="page" id="materie">
 
   <div class="materie-wrapper">
@@ -316,17 +287,13 @@
     <div id="startQuizBtn">Inizia quiz</div>
 
     <div class="materie-topbar">
-
       <input id="materieSearch" type="text" placeholder="Cerca materia...">
-
       <div class="multi-toggle" onclick="toggleMultiMode()">
         Clicca qui se vuoi selezionare più materie
       </div>
-
     </div>
 
     <div class="materie-grid">
-
       <div class="card">Psicologia generale</div>
       <div class="card">Psicologia sociale</div>
       <div class="card">Psicologia dello sviluppo</div>
@@ -346,7 +313,6 @@
       <div class="card">Psicolinguistica</div>
       <div class="card">Filosofia della scienza</div>
       <div class="card">Psicologia Forense</div>
-
     </div>
 
   </div>
@@ -374,16 +340,7 @@ function showQuizConfig() {
 }
 
 function startQuiz() {
-  const num = document.getElementById("numQ").value;
-  const diff = document.getElementById("diff").value;
-  const format = document.getElementById("format").value;
-
-  alert(
-    "Quiz avviato!\n" +
-    "Domande: " + num + "\n" +
-    "Difficoltà: " + diff + "\n" +
-    "Formato: " + (format === "mcq" ? "Crocette" : "Risposta libera")
-  );
+  alert("Quiz avviato!");
 }
 
 let multiMode = false;
@@ -418,10 +375,16 @@ function toggleMultiMode() {
 }
 
 document.getElementById("startQuizBtn").onclick = function () {
-  alert("Quiz con: " + selected.join(", "));
-};
 
-showHome();
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "flex";
+
+  const label = document.getElementById("selectedMaterieLabel");
+
+  label.innerText = selected.length
+    ? "Materie selezionate: " + selected.join(", ")
+    : "Nessuna materia selezionata";
+};
 
 </script>
 
