@@ -5,7 +5,9 @@
 
 <meta name="google-site-verification" content="Oftahp3yLVsmYHEXx1s6UvEe3Yze6kEMNYgIoSQl3_k" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob: 'self';">
+<link rel="icon" href="data:,">
+  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
@@ -92,6 +94,7 @@ header {
   font-size: 20px;
   cursor: pointer;
 }
+
 
 .page {
   display: none;
@@ -460,7 +463,8 @@ select {
   }
   
   .language, .search-icon {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 4px 8px;
   }
   
   .page {
@@ -609,12 +613,12 @@ select {
 <div class="page" id="home" style="display:flex;">
   <div class="card">
     Casi clinici
-    <div class="subtitle">Analisi di casi reali e clinici</div>
+    <div class="subtitle">Analisi di casi reali e simulati</div>
   </div>
 
   <div class="card" onclick="showQuizConfig()">
     Quiz completo
-    <div class="subtitle">Tutte le materie mescolate</div>
+    <div class="subtitle">Tutte le materie</div>
   </div>
 
   <div class="card" onclick="showMaterie()">
@@ -632,9 +636,12 @@ select {
 
     <label>Numero domande</label>
     <select id="numQ">
-      <option>5</option>
-      <option>10</option>
-      <option>15</option>
+      <option value="10">10 domande</option>
+      <option value="30">30 domande</option>
+      <option value="50" selected>50 domande</option>
+      <option value="70">70 domande</option>
+      <option value="100">100 domande</option>
+      <option value="200">200 domande</option>
     </select>
 
     <label>Difficoltà</label>
