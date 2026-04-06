@@ -93,6 +93,33 @@ header {
   cursor: pointer;
 }
 
+/* Bottone Discord */
+.discord-icon {
+  background: #5865F2;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.discord-icon:hover {
+  background: #4752c4;
+  transform: scale(1.05);
+}
+
+.discord-icon img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
 .page {
   display: none;
   flex-direction: column;
@@ -459,8 +486,14 @@ select {
     margin-left: auto;
   }
   
-  .language, .search-icon {
-    font-size: 14px;
+  .language, .search-icon, .discord-icon {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .discord-icon img {
+    width: 14px;
+    height: 14px;
   }
   
   .page {
@@ -602,6 +635,10 @@ select {
   <div class="header-right">
     <div class="language">IT ▼</div>
     <div class="search-icon">🔍</div>
+    <a href="https://discord.gg/TUO_CODICE_INVITO" target="_blank" class="discord-icon">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/discord.svg" alt="Discord">
+      Discord
+    </a>
   </div>
 </header>
 
