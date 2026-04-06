@@ -149,19 +149,10 @@
       border-radius: 12px;
       cursor: pointer;
       font-weight: bold;
-
       font-size: 18px;
       width: 240px;
       text-align: center;
       padding: 12px 0;
-
-      transition: 0.2s;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    }
-
-    #startQuizBtn:hover {
-      background: #e8a6b8;
-      transform: scale(1.05);
     }
 
     .materie-topbar {
@@ -220,7 +211,6 @@
       border-radius: 16px;
       width: 260px;
       text-align: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
     select {
@@ -228,8 +218,7 @@
       padding: 8px;
       border-radius: 10px;
       border: none;
-      margin-top: 5px;
-      margin-bottom: 10px;
+      margin: 8px 0;
     }
 
     .start-btn {
@@ -240,7 +229,6 @@
       border-radius: 10px;
       cursor: pointer;
       width: 100%;
-      font-weight: bold;
     }
 
   </style>
@@ -276,25 +264,12 @@
 <!-- HOME -->
 <div class="page" id="home" style="display:flex;">
 
-  <div class="card">
-    <div>
-      Casi clinici
-      <div class="subtitle">Analisi di casi reali e simulati</div>
-    </div>
-  </div>
+  <div class="card">Casi clinici</div>
 
-  <div class="card">
-    <div>
-      Quiz completo
-      <div class="subtitle">Tutte le materie di psicologia</div>
-    </div>
-  </div>
+  <div class="card" onclick="showQuizConfig()">Quiz completo</div>
 
   <div class="card" onclick="showMaterie()">
-    <div>
-      Quiz per materia
-      <div class="subtitle">Seleziona una disciplina</div>
-    </div>
+    Quiz per materia
   </div>
 
 </div>
@@ -304,7 +279,7 @@
 
   <div class="config-box">
 
-    <h3 style="color:#6b3e2e;">Configura quiz</h3>
+    <h3>Configura quiz</h3>
 
     <label>Numero domande</label>
     <select id="numQ">
@@ -320,13 +295,20 @@
       <option>difficile</option>
     </select>
 
+    <!-- 🔥 NUOVO -->
+    <label>Formato quiz</label>
+    <select id="format">
+      <option value="mcq">Crocette (4 opzioni)</option>
+      <option value="open">Risposta libera</option>
+    </select>
+
     <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
 
   </div>
 
 </div>
 
-<!-- MATERIE -->
+<!-- MATERIE (INVARIATO) -->
 <div class="page" id="materie">
 
   <div class="materie-wrapper">
@@ -351,6 +333,19 @@
       <div class="card">Psicobiologia</div>
       <div class="card">Psicologia Clinica</div>
       <div class="card">Psichiatria</div>
+      <div class="card">Psicologia dinamica</div>
+      <div class="card">Storia della psicologia</div>
+      <div class="card">Psicologia del lavoro</div>
+      <div class="card">Psicologia cognitiva</div>
+      <div class="card">Neuroscienze</div>
+      <div class="card">Psicometria</div>
+      <div class="card">Sociologia</div>
+      <div class="card">Teorie e tecniche del colloquio</div>
+      <div class="card">Teorie e tecniche dei test</div>
+      <div class="card">Psicologia dell'adolescenza</div>
+      <div class="card">Psicolinguistica</div>
+      <div class="card">Filosofia della scienza</div>
+      <div class="card">Psicologia Forense</div>
 
     </div>
 
@@ -378,13 +373,17 @@ function showQuizConfig() {
   document.getElementById("quizConfig").style.display = "flex";
 }
 
-document.querySelectorAll(".card")[1].onclick = showQuizConfig;
-
 function startQuiz() {
   const num = document.getElementById("numQ").value;
   const diff = document.getElementById("diff").value;
+  const format = document.getElementById("format").value;
 
-  alert("Quiz avviato!\nDomande: " + num + "\nDifficoltà: " + diff);
+  alert(
+    "Quiz avviato!\n" +
+    "Domande: " + num + "\n" +
+    "Difficoltà: " + diff + "\n" +
+    "Formato: " + (format === "mcq" ? "Crocette" : "Risposta libera")
+  );
 }
 
 let multiMode = false;
@@ -398,7 +397,7 @@ function toggleMultiMode() {
     card.onclick = function () {
 
       if (!multiMode) {
-        alert("Hai scelto: " + this.innerText);
+        alert(this.innerText);
         return;
       }
 
@@ -412,12 +411,8 @@ function toggleMultiMode() {
       }
 
       const btn = document.getElementById("startQuizBtn");
-      if (selected.length > 0) {
-        btn.style.display = "block";
-        btn.innerText = "Inizia quiz (" + selected.length + ")";
-      } else {
-        btn.style.display = "none";
-      }
+      btn.style.display = selected.length ? "block" : "none";
+      btn.innerText = "Inizia quiz (" + selected.length + ")";
     };
   });
 }
