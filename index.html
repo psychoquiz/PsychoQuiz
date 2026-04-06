@@ -426,6 +426,97 @@ select {
   transform: scale(1.05);
 }
 
+/* ===== STILE PAGINA RISULTATI ===== */
+.results-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: #f3c6d0;
+  padding: 15px 25px;
+  border-radius: 16px;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #6b3e2e;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6b3e2e;
+  margin-top: 5px;
+}
+
+.results-list {
+  background: #f3c6d0;
+  border-radius: 16px;
+  padding: 20px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.result-item {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-left: 5px solid #6b3e2e;
+}
+
+.result-date {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.result-score {
+  font-size: 18px;
+  font-weight: bold;
+  color: #6b3e2e;
+}
+
+.result-details {
+  font-size: 13px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.clear-btn {
+  background: #e6879c;
+  color: #6b3e2e;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 20px;
+}
+
+.clear-btn:hover {
+  background: #d4758a;
+  transform: scale(1.02);
+}
+
+.empty-results {
+  text-align: center;
+  padding: 40px;
+  color: #6b3e2e;
+  font-size: 16px;
+}
+
 /* ===== MEDIA QUERY PER TELEFONI ===== */
 @media (max-width: 768px) {
   header {
@@ -556,6 +647,19 @@ select {
   .quiz-buttons {
     gap: 10px;
   }
+  
+  .stat-card {
+    padding: 10px 15px;
+    min-width: 80px;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+  }
+  
+  .results-list {
+    width: 95%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -599,7 +703,7 @@ select {
     <div class="menu">
       <div class="menu-item" onclick="showHome()">Home</div>
       <div class="menu-item">Quiz</div>
-      <div class="menu-item">Risultati</div>
+      <div class="menu-item" onclick="showResults()">Risultati</div>
     </div>
   </div>
 
@@ -727,6 +831,13 @@ select {
   </div>
 </div>
 
+<!-- PAGINA RISULTATI -->
+<div class="page" id="risultati">
+  <div class="results-stats" id="resultsStats"></div>
+  <div class="results-list" id="resultsList"></div>
+  <button class="clear-btn" onclick="clearAllResults()">🗑️ Cancella tutti i risultati</button>
+</div>
+
 <!-- CARICA IL DATABASE DELLE DOMANDE -->
 <script src="questions.js"></script>
 
@@ -737,6 +848,7 @@ function showHome() {
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "none";
+  document.getElementById("risultati").style.display = "none";
   selected = [];
   updateStartButton();
 }
@@ -746,6 +858,7 @@ function showMaterie() {
   document.getElementById("materie").style.display = "flex";
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "none";
+  document.getElementById("risultati").style.display = "none";
   updateSubjectCounts();
   initializeCardClickHandlers();
 }
@@ -755,6 +868,16 @@ function showQuizConfig() {
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
   document.getElementById("quiz").style.display = "none";
+  document.getElementById("risultati").style.display = "none";
+}
+
+function showResults() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("risultati").style.display = "flex";
+  loadResults();
 }
 
 function goBack() {
@@ -947,6 +1070,96 @@ function selectAnswer(answerIndex, optionElement) {
   document.getElementById("btnNext").classList.add("show");
 }
 
+// FUNZIONI PER I RISULTATI
+function saveResult(corrette, totali, percentuale) {
+  let risultati = localStorage.getItem("psychoquiz_results");
+  risultati = risultati ? JSON.parse(risultati) : [];
+  
+  const nuovoRisultato = {
+    data: new Date().toLocaleString(),
+    punteggio: `${corrette}/${totali}`,
+    percentuale: percentuale,
+    materie: selected.join(", "),
+    difficolta: document.getElementById("diff").value,
+    numDomande: totali
+  };
+  
+  risultati.unshift(nuovoRisultato);
+  
+  if (risultati.length > 10) {
+    risultati = risultati.slice(0, 10);
+  }
+  
+  localStorage.setItem("psychoquiz_results", JSON.stringify(risultati));
+}
+
+function loadResults() {
+  const risultati = localStorage.getItem("psychoquiz_results");
+  const lista = risultati ? JSON.parse(risultati) : [];
+  
+  const statsDiv = document.getElementById("resultsStats");
+  const listDiv = document.getElementById("resultsList");
+  
+  if (lista.length === 0) {
+    statsDiv.innerHTML = '';
+    listDiv.innerHTML = '<div class="empty-results">📭 Nessun risultato salvato.<br>Completa un quiz per vedere i tuoi progressi!</div>';
+    return;
+  }
+  
+  let totaleQuiz = lista.length;
+  let sommaPercentuali = 0;
+  let migliore = 0;
+  let peggiore = 100;
+  
+  lista.forEach(r => {
+    sommaPercentuali += r.percentuale;
+    if (r.percentuale > migliore) migliore = r.percentuale;
+    if (r.percentuale < peggiore) peggiore = r.percentuale;
+  });
+  
+  let media = Math.round(sommaPercentuali / totaleQuiz);
+  
+  statsDiv.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-value">${totaleQuiz}</div>
+      <div class="stat-label">Quiz completati</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${media}%</div>
+      <div class="stat-label">Media</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${migliore}%</div>
+      <div class="stat-label">Migliore</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${peggiore}%</div>
+      <div class="stat-label">Peggiore</div>
+    </div>
+  `;
+  
+  let html = '';
+  lista.forEach(r => {
+    let icona = r.percentuale >= 80 ? '🏆' : (r.percentuale >= 60 ? '👍' : '📚');
+    html += `
+      <div class="result-item">
+        <div class="result-date">${icona} ${r.data}</div>
+        <div class="result-score">Punteggio: ${r.punteggio} (${r.percentuale}%)</div>
+        <div class="result-details">📖 Materie: ${r.materie}</div>
+        <div class="result-details">⚙️ Difficoltà: ${r.difficolta} | 📊 Domande: ${r.numDomande}</div>
+      </div>
+    `;
+  });
+  listDiv.innerHTML = html;
+}
+
+function clearAllResults() {
+  if (confirm("⚠️ Sei sicuro di voler cancellare TUTTI i risultati? Questa operazione è irreversibile.")) {
+    localStorage.removeItem("psychoquiz_results");
+    loadResults();
+  }
+}
+
 function nextQuestion() {
   currentQuestionIndex++;
   
@@ -962,7 +1175,9 @@ function nextQuestion() {
     });
     const percentuale = Math.round((corrette / quizQuestions.length) * 100);
     
-    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%`);
+    saveResult(corrette, quizQuestions.length, percentuale);
+    
+    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%\n\nIl risultato è stato salvato!`);
     goBack();
   }
 }
