@@ -75,4 +75,6 @@ const questionsBySubject = {
   "Criminologia": [],
   "Antropologia culturale": [],
   "Pedagogia generale": []
+  "Psicofarmacologia": []
+  "Counseling": []
 };
