@@ -587,6 +587,9 @@ function showQuizConfig() {
   document.getElementById("quiz").style.display = "none";
 }
 
+/* ============================
+   FUNZIONE INDietro MODIFICATA
+   ============================ */
 function goBack() {
   // Se siamo nella prima domanda, torna alla configurazione
   if (currentQuestionIndex === 0) {
@@ -594,10 +597,10 @@ function goBack() {
     document.getElementById("quiz").style.display = "none";
     currentQuestionIndex = 0;
     selectedAnswer = null;
+    userAnswers = [];  // RESET DELLE RISPOSTE
   } else {
     // Torna alla domanda precedente
     currentQuestionIndex--;
-    selectedAnswer = null;
     loadQuestion();
   }
 }
@@ -670,13 +673,14 @@ document.getElementById("startQuizBtn").addEventListener("click", function() {
 });
 
 /* ============================
-   LOGICA DEL QUIZ
+   LOGICA DEL QUIZ MODIFICATA CON SALVATAGGIO RISPOSTE
    ============================ */
 
 let currentQuestionIndex = 0;
 let selectedAnswer = null;
 let quizQuestions = [];
 let currentMaterie = [];
+let userAnswers = [];  // Array per salvare le risposte degli utenti
 
 function startQuiz() {
   const format = document.getElementById("format").value;
@@ -709,6 +713,7 @@ function startQuiz() {
 
   currentQuestionIndex = 0;
   selectedAnswer = null;
+  userAnswers = [];  // RESET DELLE RISPOSTE PER IL NUOVO QUIZ
 
   // Mostra la schermata quiz
   document.getElementById("quizConfig").style.display = "none";
@@ -754,25 +759,48 @@ function loadQuestion() {
   });
 
   // Reset bottone next
-  selectedAnswer = null;
   document.getElementById("btnNext").classList.remove("show");
+  
+  // RIPRISTINA LA RISPOSTA SE GIÀ ESISTE
+  const savedAnswer = userAnswers[currentQuestionIndex];
+  if (savedAnswer !== undefined) {
+    // Applica lo stile alla risposta salvata
+    const allOptions = document.querySelectorAll(".option");
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    
+    allOptions.forEach((opt, index) => {
+      opt.style.pointerEvents = "none";
+      if (index === currentQuestion.corretta) {
+        opt.classList.add("correct");
+      } else if (index === savedAnswer && savedAnswer !== currentQuestion.corretta) {
+        opt.classList.add("wrong");
+      }
+    });
+    
+    selectedAnswer = savedAnswer;
+    document.getElementById("btnNext").classList.add("show");
+  } else {
+    selectedAnswer = null;
+  }
 }
 
 function selectAnswer(answerIndex, optionElement) {
   if (selectedAnswer !== null) return;
 
   selectedAnswer = answerIndex;
+  
+  // SALVA LA RISPOSTA DELL'UTENTE
+  userAnswers[currentQuestionIndex] = answerIndex;
+  
   const question = quizQuestions[currentQuestionIndex];
   const allOptions = document.querySelectorAll(".option");
 
   allOptions.forEach((opt, index) => {
+    opt.style.pointerEvents = "none";
     if (index === question.corretta) {
       opt.classList.add("correct");
     } else if (index === answerIndex && answerIndex !== question.corretta) {
       opt.classList.add("wrong");
-    } else if (index !== answerIndex) {
-      opt.classList.add("disabled");
-      opt.style.opacity = "0.5";
     }
   });
 
@@ -786,7 +814,16 @@ function nextQuestion() {
     selectedAnswer = null;
     loadQuestion();
   } else {
-    alert("Quiz completato!");
+    // Calcola il punteggio
+    let corrette = 0;
+    quizQuestions.forEach((question, index) => {
+      if (userAnswers[index] === question.corretta) {
+        corrette++;
+      }
+    });
+    const percentuale = Math.round((corrette / quizQuestions.length) * 100);
+    
+    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%`);
     goBack();
   }
 }
