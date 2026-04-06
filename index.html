@@ -426,9 +426,9 @@ select {
 /* ===== MEDIA QUERY PER TELEFONI ===== */
 @media (max-width: 768px) {
   header {
-    padding: 8px 12px;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    padding: 10px 15px;
   }
   
   .left-header {
@@ -437,16 +437,30 @@ select {
   }
   
   .title {
-    font-size: 20px;
+    font-size: 22px;
   }
   
   .icon {
-    font-size: 24px;
+    font-size: 26px;
+  }
+  
+  .menu {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
   }
   
   .menu-item {
-    padding: 4px 10px;
-    font-size: 11px;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  
+  .header-right {
+    margin-left: auto;
+  }
+  
+  .language, .search-icon {
+    font-size: 14px;
   }
   
   .page {
@@ -595,12 +609,12 @@ select {
 <div class="page" id="home" style="display:flex;">
   <div class="card">
     Casi clinici
-    <div class="subtitle">Analisi di casi reali e simulati</div>
+    <div class="subtitle">Analisi di casi reali e clinici</div>
   </div>
 
   <div class="card" onclick="showQuizConfig()">
     Quiz completo
-    <div class="subtitle">Tutte le materie</div>
+    <div class="subtitle">Tutte le materie mescolate</div>
   </div>
 
   <div class="card" onclick="showMaterie()">
