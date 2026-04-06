@@ -75,15 +75,6 @@
       cursor: pointer;
     }
 
-    #searchBox {
-      display: none;
-      padding: 5px 10px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      width: 120px;
-    }
-
     .page {
       display: none;
       flex-direction: column;
@@ -92,6 +83,7 @@
       margin-top: 80px;
     }
 
+    /* HOME CARD */
     .card {
       background: #f3c6d0;
       width: 260px;
@@ -107,6 +99,7 @@
       cursor: pointer;
       transition: 0.2s;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      flex-direction: column;
     }
 
     .card:hover {
@@ -114,12 +107,11 @@
       transform: scale(1.05);
     }
 
-    .card.selected {
-      background: #6b3e2e;
-      color: #f3c6d0;
+    .subtitle {
+      font-size: 13px;
+      font-weight: normal;
+      margin-top: 6px;
     }
-
-    .subtitle { font-size: 13px; font-weight: normal; margin-top: 6px; }
 
     #materie { flex-direction: column; align-items: center; }
 
@@ -181,6 +173,12 @@
       width: 170px;
       height: 60px;
       font-size: 15px;
+      flex-direction: row;
+    }
+
+    .card.selected {
+      background: #6b3e2e;
+      color: #f3c6d0;
     }
 
     #quizConfig {
@@ -215,6 +213,12 @@
       width: 100%;
     }
 
+    #selectedMaterieLabel {
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #6b3e2e;
+    }
+
   </style>
 </head>
 
@@ -223,6 +227,7 @@
 <header>
   <div class="left-header">
     <div class="title"><span class="icon">Ψ</span> PsychoQuiz</div>
+
     <div class="menu">
       <div class="menu-item" onclick="showHome()">Home</div>
       <div class="menu-item">Quiz</div>
@@ -232,16 +237,28 @@
 
   <div class="header-right">
     <div class="language">IT ▼</div>
-    <input id="searchBox" type="text" placeholder="Cerca...">
     <div class="search-icon">🔍</div>
   </div>
 </header>
 
 <!-- HOME -->
 <div class="page" id="home" style="display:flex;">
-  <div class="card">Casi clinici</div>
-  <div class="card" onclick="showQuizConfig()">Quiz completo</div>
-  <div class="card" onclick="showMaterie()">Quiz per materia</div>
+
+  <div class="card">
+    Casi clinici
+    <div class="subtitle">Analisi di casi reali e clinici</div>
+  </div>
+
+  <div class="card" onclick="showQuizConfig()">
+    Quiz completo
+    <div class="subtitle">Tutte le materie mescolate</div>
+  </div>
+
+  <div class="card" onclick="showMaterie()">
+    Quiz per materia
+    <div class="subtitle">Scegli una o più materie</div>
+  </div>
+
 </div>
 
 <!-- QUIZ CONFIG -->
@@ -251,8 +268,7 @@
 
     <h3>Configura quiz</h3>
 
-    <div id="selectedMaterieLabel"
-         style="margin-bottom:10px; font-size:13px; color:#6b3e2e;"></div>
+    <div id="selectedMaterieLabel"></div>
 
     <label>Numero domande</label>
     <select id="numQ">
@@ -277,6 +293,7 @@
     <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
 
   </div>
+
 </div>
 
 <!-- MATERIE -->
@@ -294,6 +311,7 @@
     </div>
 
     <div class="materie-grid">
+
       <div class="card">Psicologia generale</div>
       <div class="card">Psicologia sociale</div>
       <div class="card">Psicologia dello sviluppo</div>
@@ -313,6 +331,7 @@
       <div class="card">Psicolinguistica</div>
       <div class="card">Filosofia della scienza</div>
       <div class="card">Psicologia Forense</div>
+
     </div>
 
   </div>
