@@ -143,19 +143,21 @@ header {
 }
 
 #startQuizBtn {
-  display: none;
-  margin-top: 10px;
-  background: #bdb76b;
+  background: transparent;
   color: #6b3e2e;
-  border-radius: 12px;
+  border: 3px solid #6b3e2e;
+  border-radius: 50px;
+  font-family: "Emilys Candy", serif;
+  font-size: 24px;
+  padding: 12px 40px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 18px;
-  width: 240px;
-  text-align: center;
-  padding: 12px 0;
-  transition: 0.2s;
-  font-family: "Emilys Candy", serif;  /* 👈 AGGIUNGI QUESTA RIGA */
+  transition: 0.3s;
+}
+
+#startQuizBtn:hover {
+  background: #6b3e2e;
+  color: #f3c6d0;
+  transform: scale(1.05);
 }
 
 #startQuizBtn:hover {
