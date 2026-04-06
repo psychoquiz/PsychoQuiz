@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PsychoQuiz GitHub - Quiz di Psicologia Online</title>
-
-<meta name="google-site-verification" content="Oftahp3yLVsmYHEXx1s6UvEe3Yze6kEMNYgIoSQl3_k" />
+<title>PsychoQuiz GitHub</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,55 +15,40 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* ======= TUO CSS UGUALE (non l'ho toccato per evitare errori) ======= */
-
 header {
-  width: 100%;
   background: #6b3e2e;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.left-header { display: flex; align-items: center; gap: 25px; }
-
-.title {
-  display: flex; align-items: center; gap: 10px;
+  padding: 10px;
   color: #f3c6d0;
-  font-family: "Emilys Candy", serif;
-  font-size: 32px;
 }
 
-.icon { font-size: 34px; }
+.page {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
 
-.menu { display: flex; gap: 10px; }
-
-.menu-item {
+.card {
   background: #f3c6d0;
-  color: #6b3e2e;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.page { display: none; flex-direction: column; align-items: center; margin-top: 80px; }
-.card { background: #f3c6d0; width: 260px; height: 140px; border-radius: 16px;
-  display: flex; justify-content: center; align-items: center;
-  flex-direction: column; cursor: pointer; }
-
-#materie .card {
-  width: 170px;
+  width: 200px;
   height: 60px;
-  flex-direction: row;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .card.selected {
   background: #6b3e2e;
   color: #f3c6d0;
+}
+
+#materie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
 </head>
@@ -73,61 +56,89 @@ header {
 <body>
 
 <header>
-  <div class="left-header">
-    <div class="title"><span class="icon">Ψ</span> PsychoQuiz</div>
-    <div class="menu">
-      <div class="menu-item" onclick="showHome()">Home</div>
-      <div class="menu-item">Quiz</div>
-      <div class="menu-item">Risultati</div>
-    </div>
-  </div>
+  PsychoQuiz
 </header>
 
 <!-- HOME -->
-<div class="page" id="home" style="display:flex;">
-  <div class="card" onclick="showMaterie()">Quiz per materia</div>
+<div id="home" class="page" style="display:flex;">
+  <button onclick="showMaterie()">Vai alle materie</button>
 </div>
 
 <!-- MATERIE -->
-<div class="page" id="materie">
-  <div class="card">Psicologia generale</div>
-  <div class="card">Psicologia sociale</div>
-  <div class="card">Psicologia dello sviluppo</div>
-  <div class="card">Psicobiologia</div>
+<div id="materie" class="page">
+
+  <div class="card" data-subject="Psicologia generale">Psicologia generale</div>
+  <div class="card" data-subject="Psicologia sociale">Psicologia sociale</div>
+  <div class="card" data-subject="Psicologia dello sviluppo">Psicologia sviluppo</div>
+  <div class="card" data-subject="Psicobiologia">Psicobiologia</div>
+
 </div>
 
-<script>
-/* NAV */
-function showHome() {
-  document.getElementById("home").style.display = "flex";
-  document.getElementById("materie").style.display = "none";
-}
+<script src="questions.js"></script>
 
+<script>
+
+/* NAV */
 function showMaterie() {
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "flex";
 }
 
 /* =========================
-   FUNZIONE CONTEGGI
+   CONTEGGI AUTOMATICI
    ========================= */
 
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    const name = card.innerText.split(" (")[0];
-    const count = (window.questionsBySubject?.[name]?.length) || 0;
-    card.innerText = `${name} (${count})`;
+
+    const subject = card.dataset.subject;
+    const count = (window.questionsBySubject?.[subject]?.length) || 0;
+
+    card.innerHTML = `${subject} <span style="opacity:0.6">(${count})</span>`;
   });
 }
 
-/* aspetta caricamento pagina */
+/* =========================
+   MULTI SELEZIONE
+   ========================= */
+
+let multiMode = false;
+let selected = [];
+
+function enableSelection() {
+  document.querySelectorAll("#materie .card").forEach(card => {
+
+    card.onclick = function () {
+
+      const subject = this.dataset.subject;
+
+      if (!multiMode) {
+        alert(subject);
+        return;
+      }
+
+      if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        selected = selected.filter(s => s !== subject);
+      } else {
+        if (selected.length >= 6) return;
+        this.classList.add("selected");
+        selected.push(subject);
+      }
+    };
+  });
+}
+
+/* =========================
+   INIT
+   ========================= */
+
 window.addEventListener("DOMContentLoaded", () => {
   updateSubjectCounts();
+  enableSelection();
 });
-</script>
 
-<!-- IMPORTANTE: questions.js -->
-<script src="questions.js"></script>
+</script>
 
 </body>
 </html>
