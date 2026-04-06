@@ -140,12 +140,12 @@ header {
   align-items: center;
   gap: 12px;
   width: 100%;
-  position: relative;  /* 👈 AGGIUNGI QUESTA RIGA */
+  position: relative;
 }
 
 #startQuizBtn {
   display: none;
-  background: #e6879c;
+  background: #6b3e2e;
   color: #f3c6d0;
   border-radius: 50px;
   cursor: pointer;
@@ -158,25 +158,13 @@ header {
   font-family: "Emilys Candy", serif;
   border: 2px solid #f3c6d0;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  
-  /* 👇 QUESTE SONO LE RIGHE NUOVE */
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-  #startQuizBtn:hover {
-  box-shadow: 0 0 20px rgba(243, 198, 208, 0.8);
-  background: #8b5e4e;
-  /* niente transform */
+  margin: 10px auto;
 }
 
 #startQuizBtn:hover {
-  box-shadow: 0 0 20px rgba(243, 198, 208, 0.8);
   background: #8b5e4e;
-  /* niente transform */
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
 
 .materie-topbar {
@@ -184,7 +172,6 @@ header {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 60px;  /* 👈 AGGIUNGI QUESTA RIGA */
 }
 
 #materieSearch {
@@ -210,12 +197,21 @@ header {
   height: 60px;
   font-size: 15px;
   flex-direction: row;
-  border: 2px solid #e6879c;
+  border: 2px solid #6b3e2e;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.card.selected {
+#materie .card:hover {
+  border: 2px solid #f3c6d0;
+  transform: scale(1.02);
+}
+
+#materie .card.selected {
   background: #6b3e2e;
   color: #f3c6d0;
+  border: 2px solid #f3c6d0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 #quizConfig {
@@ -249,6 +245,14 @@ select {
   cursor: pointer;
   width: 100%;
   font-weight: bold;
+  font-family: "Emilys Candy", serif;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.start-btn:hover {
+  background: #8b5e4e;
+  transform: scale(1.02);
 }
 
 #selectedMaterieLabel {
@@ -480,20 +484,23 @@ select {
     <select id="numQ">
       <option>5</option>
       <option>10</option>
-      <option>15</option>
+      <option selected>15</option>
+      <option>20</option>
+      <option>30</option>
     </select>
 
     <label>Difficoltà</label>
     <select id="diff">
-      <option>facile</option>
-      <option>medio</option>
-      <option>difficile</option>
+      <option value="all">Tutte</option>
+      <option value="facile">Facile</option>
+      <option value="medio">Medio</option>
+      <option value="difficile">Difficile</option>
     </select>
 
     <label>Formato quiz</label>
     <select id="format">
       <option value="mcq">Crocette (4 opzioni)</option>
-      <option value="open">Risposta libera</option>
+      <option value="open" disabled>Risposta libera (presto disponibile)</option>
     </select>
 
     <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
@@ -507,39 +514,10 @@ select {
     <div id="startQuizBtn">Inizia quiz</div>
 
     <div class="materie-topbar">
-      <input id="materieSearch" type="text" placeholder="Cerca materia...">
+      <input id="materieSearch" type="text" placeholder="Cerca materia..." onkeyup="filterMaterie()">
     </div>
 
-    <div class="materie-grid">
-
-      <div class="card">Psicologia generale</div>
-      <div class="card">Psicologia sociale</div>
-      <div class="card">Psicologia dello sviluppo</div>
-      <div class="card">Psicobiologia</div>
-      <div class="card">Psicologia Clinica</div>
-      <div class="card">Psichiatria</div>
-      <div class="card">Psicologia dinamica</div>
-      <div class="card">Storia della psicologia</div>
-      <div class="card">Psicologia del lavoro</div>
-      <div class="card">Psicologia cognitiva</div>
-      <div class="card">Neuroscienze</div>
-      <div class="card">Psicometria</div>
-      <div class="card">Sociologia</div>
-      <div class="card">Teorie e tecniche del colloquio</div>
-      <div class="card">Teorie e tecniche dei test</div>
-      <div class="card">Psicologia dell'adolescenza</div>
-      <div class="card">Psicolinguistica</div>
-      <div class="card">Filosofia della scienza</div>
-      <div class="card">Psicologia Forense</div>
-      <div class="card">Psicologia della disabilità</div>
-      <div class="card">Biologia</div>
-      <div class="card">Psicologia delle emozioni</div>
-      <div class="card">Psicologia dell'educazione</div>
-      <div class="card">Criminologia</div>
-      <div class="card">Antropologia culturale</div>
-      <div class="card">Pedagogia generale</div>
-
-    </div>
+    <div class="materie-grid" id="materieGrid"></div>
   </div>
 </div>
 
@@ -560,20 +538,108 @@ select {
     <div class="options" id="optionsContainer"></div>
 
     <div class="quiz-buttons">
-      <button class="btn-back" onclick="goBack()">Indietro</button>
-      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima</button>
+      <button class="btn-back" onclick="goBack()">← Indietro</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima →</button>
     </div>
   </div>
 </div>
 
-<script>
+<!-- CARICA IL DATABASE DELLE DOMANDE -->
+<script src="questions.js"></script>
 
-/* NAV */
+<!-- SCRIPT PRINCIPALE -->
+<script>
+// Variabili globali
+let selected = [];
+let currentQuestionIndex = 0;
+let selectedAnswer = null;
+let quizQuestions = [];
+
+// Funzione per ottenere tutte le materie disponibili da questionsBySubject
+function getAllMaterie() {
+  return Object.keys(questionsBySubject).sort();
+}
+
+// Popola la griglia delle materie
+function populateMaterieGrid() {
+  const grid = document.getElementById("materieGrid");
+  grid.innerHTML = "";
+  
+  getAllMaterie().forEach(materia => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-materia", materia);
+    card.textContent = materia;
+    card.onclick = () => toggleMaterieSelection(card, materia);
+    grid.appendChild(card);
+  });
+  
+  updateSubjectCounts();
+}
+
+// Filtra le materie in base alla ricerca
+function filterMaterie() {
+  const searchTerm = document.getElementById("materieSearch").value.toLowerCase();
+  const cards = document.querySelectorAll("#materieGrid .card");
+  
+  cards.forEach(card => {
+    const materia = card.getAttribute("data-materia").toLowerCase();
+    if (materia.includes(searchTerm)) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// Toggle selezione materia
+function toggleMaterieSelection(card, materia) {
+  if (card.classList.contains("selected")) {
+    card.classList.remove("selected");
+    selected = selected.filter(m => m !== materia);
+  } else {
+    if (selected.length < 6) {
+      card.classList.add("selected");
+      selected.push(materia);
+    } else {
+      alert("Puoi selezionare massimo 6 materie per volta!");
+    }
+  }
+  updateStartButton();
+}
+
+// Aggiorna il conteggio delle domande per ogni materia
+function updateSubjectCounts() {
+  const cards = document.querySelectorAll("#materieGrid .card");
+  cards.forEach(card => {
+    const materia = card.getAttribute("data-materia");
+    const count = questionsBySubject[materia]?.length || 0;
+    const originalText = materia;
+    card.textContent = `${originalText} (${count})`;
+    card.setAttribute("data-materia", originalText);
+  });
+}
+
+// Aggiorna il bottone start
+function updateStartButton() {
+  const btn = document.getElementById("startQuizBtn");
+  if (selected.length > 0) {
+    btn.style.display = "block";
+    btn.textContent = selected.length === 1 
+      ? "▶ Inizia quiz" 
+      : `▶ Inizia quiz (${selected.length} materie)`;
+  } else {
+    btn.style.display = "none";
+  }
+}
+
+// Navigazione
 function showHome() {
   document.getElementById("home").style.display = "flex";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "none";
+  
   selected = [];
   updateStartButton();
 }
@@ -583,15 +649,28 @@ function showMaterie() {
   document.getElementById("materie").style.display = "flex";
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "none";
-  updateSubjectCounts();
-  initializeCardClickHandlers();
+  
+  if (document.getElementById("materieGrid").children.length === 0) {
+    populateMaterieGrid();
+  } else {
+    updateSubjectCounts();
+  }
 }
 
 function showQuizConfig() {
+  if (selected.length === 0) {
+    alert("Seleziona almeno una materia prima di continuare!");
+    showMaterie();
+    return;
+  }
+  
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
   document.getElementById("quiz").style.display = "none";
+  
+  const label = document.getElementById("selectedMaterieLabel");
+  label.innerHTML = `<strong>Materie selezionate:</strong><br>${selected.join(", ")}`;
 }
 
 function goBack() {
@@ -601,141 +680,72 @@ function goBack() {
   selectedAnswer = null;
 }
 
-
-
-
-/* ⭐ AGGIORNA CONTEGGI DINAMICAMENTE ⭐ */
-function updateSubjectCounts() {
-  document.querySelectorAll("#materie .card").forEach(card => {
-    const fullText = card.innerText;
-    const name = fullText.split(" (")[0];
-    const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
-  });
-}
-
-/* 🔄 Aggiorna ogni 500ms */
-setInterval(updateSubjectCounts, 500);
-
-/* ============================
-   SELEZIONE MATERIE
-   ============================ */
-
-let selected = [];
-
-function initializeCardClickHandlers() {
-  document.querySelectorAll("#materie .card").forEach(card => {
-    const newCard = card.cloneNode(true);
-    card.parentNode.replaceChild(newCard, card);
-  });
-
-  document.querySelectorAll("#materie .card").forEach(card => {
-    card.addEventListener("click", function() {
-      const cardName = this.innerText.split(" (")[0];
-      
-      if (this.classList.contains("selected")) {
-        this.classList.remove("selected");
-        selected = selected.filter(t => t !== cardName);
-      } else {
-        if (selected.length < 6) {
-          this.classList.add("selected");
-          selected.push(cardName);
-        }
-      }
-      
-      updateStartButton();
-    });
-  });
-}
-
-function updateStartButton() {
-  const btn = document.getElementById("startQuizBtn");
-  if (selected.length > 0) {
-    btn.style.display = "block";
-    btn.innerText = selected.length === 1 
-      ? "Inizia quiz" 
-      : `Inizia quiz (${selected.length})`;
-  } else {
-    btn.style.display = "none";
-  }
-}
-
-/* start quiz da materie */
-document.getElementById("startQuizBtn").addEventListener("click", function() {
-  document.getElementById("materie").style.display = "none";
-  document.getElementById("quizConfig").style.display = "flex";
-
-  const label = document.getElementById("selectedMaterieLabel");
-  label.innerText = selected.length
-    ? "Materie selezionate: " + selected.join(", ")
-    : "Nessuna materia selezionata";
-});
-
-/* ============================
-   LOGICA DEL QUIZ
-   ============================ */
-
-let currentQuestionIndex = 0;
-let selectedAnswer = null;
-let quizQuestions = [];
-let currentMaterie = [];
-
+// Avvia il quiz
 function startQuiz() {
   const format = document.getElementById("format").value;
   
   if (format !== "mcq") {
-    alert("Formato non ancora disponibile");
+    alert("Al momento è disponibile solo il formato a crocette");
     return;
   }
-
+  
   // Raccogli tutte le domande dalle materie selezionate
   quizQuestions = [];
-  currentMaterie = selected;
   
   selected.forEach(materia => {
     const questions = questionsBySubject[materia] || [];
-    quizQuestions = quizQuestions.concat(questions);
+    questions.forEach(q => {
+      quizQuestions.push({
+        ...q,
+        materia: materia
+      });
+    });
   });
-
+  
   if (quizQuestions.length === 0) {
-    alert("Non ci sono domande disponibili per le materie selezionate");
+    alert(`Nessuna domanda disponibile per: ${selected.join(", ")}`);
     return;
   }
-
-  // Mescola le domande
-  quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
-
-  // Limita al numero di domande richiesto
-  const numQ = parseInt(document.getElementById("numQ").value);
-  quizQuestions = quizQuestions.slice(0, numQ);
-
+  
+  // Filtra per difficoltà
+  const difficolta = document.getElementById("diff").value;
+  let filteredQuestions = quizQuestions;
+  if (difficolta !== "all") {
+    filteredQuestions = quizQuestions.filter(q => q.difficolta === difficolta);
+    if (filteredQuestions.length === 0) {
+      alert(`Nessuna domanda di livello ${difficolta} trovata`);
+      return;
+    }
+  }
+  
+  // Mescola e limita
+  filteredQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
+  let numQ = parseInt(document.getElementById("numQ").value);
+  numQ = Math.min(numQ, filteredQuestions.length);
+  quizQuestions = filteredQuestions.slice(0, numQ);
+  
   currentQuestionIndex = 0;
   selectedAnswer = null;
-
-  // Mostra la schermata quiz
+  
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "flex";
-
-  // Carica la prima domanda
+  
   loadQuestion();
 }
 
+// Carica la domanda corrente
 function loadQuestion() {
   const question = quizQuestions[currentQuestionIndex];
   
-  // Aggiorna header
   document.getElementById("currentQuestion").textContent = currentQuestionIndex + 1;
   document.getElementById("totalQuestions").textContent = quizQuestions.length;
-  document.getElementById("materiaQuiz").textContent = selected.join(", ");
-
-  // Aggiorna progress bar
+  document.getElementById("materiaQuiz").textContent = question.materia || selected.join(", ");
+  
   const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
   document.getElementById("progressBar").style.width = progress + "%";
-
-  // Aggiorna domanda
+  
   document.getElementById("questionText").textContent = question.domanda;
-
-  // Crea le opzioni
+  
   const optionsContainer = document.getElementById("optionsContainer");
   optionsContainer.innerHTML = "";
   
@@ -748,40 +758,35 @@ function loadQuestion() {
       <div>${risposta}</div>
     `;
     
-    option.addEventListener("click", () => {
-      selectAnswer(index, option);
-    });
-    
+    option.onclick = () => selectAnswer(index, option);
     optionsContainer.appendChild(option);
   });
-
-  // Reset bottone next
+  
   selectedAnswer = null;
   document.getElementById("btnNext").classList.remove("show");
 }
 
+// Seleziona una risposta
 function selectAnswer(answerIndex, optionElement) {
-  if (selectedAnswer !== null) return; // Prevent double click
-
+  if (selectedAnswer !== null) return;
+  
   selectedAnswer = answerIndex;
   const question = quizQuestions[currentQuestionIndex];
   const allOptions = document.querySelectorAll(".option");
-
+  
   allOptions.forEach((opt, index) => {
+    opt.style.pointerEvents = "none";
     if (index === question.corretta) {
       opt.classList.add("correct");
     } else if (index === answerIndex && answerIndex !== question.corretta) {
       opt.classList.add("wrong");
-    } else if (index !== answerIndex) {
-      opt.classList.add("disabled");
-      opt.style.opacity = "0.5";
     }
   });
-
-  // Mostra bottone next
+  
   document.getElementById("btnNext").classList.add("show");
 }
 
+// Prossima domanda
 function nextQuestion() {
   currentQuestionIndex++;
   
@@ -789,12 +794,21 @@ function nextQuestion() {
     selectedAnswer = null;
     loadQuestion();
   } else {
-    // Quiz finito
-    alert("Quiz completato!");
+    alert("Quiz completato! 🎉");
     goBack();
   }
 }
 
+// Inizializzazione
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("startQuizBtn").onclick = () => {
+    if (selected.length > 0) {
+      showQuizConfig();
+    } else {
+      alert("Seleziona almeno una materia!");
+    }
+  };
+});
 </script>
 
 </body>
