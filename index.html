@@ -908,14 +908,20 @@ setInterval(updateSubjectCounts, 500);
 let selected = [];
 
 function initializeCardClickHandlers() {
-  document.querySelectorAll("#materie .card").forEach(card => {
+  const cards = document.querySelectorAll("#materie .card");
+  
+  cards.forEach(card => {
+    // Rimuovi eventuali listener vecchi clonando
     const newCard = card.cloneNode(true);
     card.parentNode.replaceChild(newCard, card);
   });
-
-  document.querySelectorAll("#materie .card").forEach(card => {
-    card.addEventListener("click", function() {
-      const cardName = this.innerText.split(" (")[0];
+  
+  const nuoveCards = document.querySelectorAll("#materie .card");
+  nuoveCards.forEach(card => {
+    card.addEventListener("click", function(e) {
+      e.stopPropagation();
+      const fullText = this.innerText;
+      const cardName = fullText.split(" (")[0];
       
       if (this.classList.contains("selected")) {
         this.classList.remove("selected");
@@ -924,6 +930,8 @@ function initializeCardClickHandlers() {
         if (selected.length < 6) {
           this.classList.add("selected");
           selected.push(cardName);
+        } else {
+          alert("Puoi selezionare massimo 6 materie!");
         }
       }
       
