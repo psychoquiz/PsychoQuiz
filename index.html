@@ -229,12 +229,184 @@ select {
   border-radius: 10px;
   cursor: pointer;
   width: 100%;
+  font-weight: bold;
 }
 
 #selectedMaterieLabel {
   margin-bottom: 10px;
   font-size: 13px;
   color: #6b3e2e;
+}
+
+/* ===== SCHERMATA QUIZ ===== */
+#quiz {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #6b3e2e;
+  font-weight: bold;
+}
+
+.quiz-progress {
+  width: 100%;
+  max-width: 600px;
+  height: 8px;
+  background: #e8a6b8;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #6b3e2e;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.quiz-container {
+  background: #f3c6d0;
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.question-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6b3e2e;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  background: white;
+  border: 2px solid #e8a6b8;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #6b3e2e;
+}
+
+.option:hover {
+  background: #e8a6b8;
+  transform: translateX(5px);
+}
+
+.option-letter {
+  background: #6b3e2e;
+  color: #f3c6d0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.option.selected {
+  background: #6b3e2e;
+  color: #f3c6d0;
+  border-color: #6b3e2e;
+}
+
+.option.selected .option-letter {
+  background: #f3c6d0;
+  color: #6b3e2e;
+}
+
+.option.correct {
+  background: #4caf50;
+  border-color: #4caf50;
+  color: white;
+}
+
+.option.correct .option-letter {
+  background: white;
+  color: #4caf50;
+}
+
+.option.wrong {
+  background: #f44336;
+  border-color: #f44336;
+  color: white;
+}
+
+.option.wrong .option-letter {
+  background: white;
+  color: #f44336;
+}
+
+.quiz-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.btn-next {
+  background: #6b3e2e;
+  color: #f3c6d0;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.2s;
+  display: none;
+}
+
+.btn-next:hover {
+  background: #5a2f23;
+  transform: scale(1.05);
+}
+
+.btn-next.show {
+  display: block;
+}
+
+.btn-back {
+  background: #e8a6b8;
+  color: #6b3e2e;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.btn-back:hover {
+  background: #d88fa6;
+  transform: scale(1.05);
 }
 </style>
 </head>
@@ -349,6 +521,29 @@ select {
   </div>
 </div>
 
+<!-- QUIZ SCREEN -->
+<div class="page" id="quiz">
+  <div class="quiz-header">
+    <span>Domanda <span id="currentQuestion">1</span> di <span id="totalQuestions">5</span></span>
+    <span id="materiaQuiz">Psicologia generale</span>
+  </div>
+
+  <div class="quiz-progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="quiz-container">
+    <div class="question-text" id="questionText">Domanda qui</div>
+    
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="quiz-buttons">
+      <button class="btn-back" onclick="goBack()">Indietro</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima</button>
+    </div>
+  </div>
+</div>
+
 <script>
 
 /* NAV */
@@ -356,7 +551,8 @@ function showHome() {
   document.getElementById("home").style.display = "flex";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "none";
-  selected = []; // Reset selezione
+  document.getElementById("quiz").style.display = "none";
+  selected = [];
   updateStartButton();
 }
 
@@ -364,6 +560,7 @@ function showMaterie() {
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "flex";
   document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "none";
   updateSubjectCounts();
   initializeCardClickHandlers();
 }
@@ -372,10 +569,14 @@ function showQuizConfig() {
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
+  document.getElementById("quiz").style.display = "none";
 }
 
-function startQuiz() {
-  alert("Quiz avviato!");
+function goBack() {
+  document.getElementById("quizConfig").style.display = "flex";
+  document.getElementById("quiz").style.display = "none";
+  currentQuestionIndex = 0;
+  selectedAnswer = null;
 }
 
 /* =========================
@@ -442,31 +643,25 @@ setInterval(updateSubjectCounts, 500);
 let selected = [];
 
 function initializeCardClickHandlers() {
-  // RIMUOVI i vecchi event listener clonando i nodi
   document.querySelectorAll("#materie .card").forEach(card => {
     const newCard = card.cloneNode(true);
     card.parentNode.replaceChild(newCard, card);
   });
 
-  // ORA aggiungi i nuovi event listener
   document.querySelectorAll("#materie .card").forEach(card => {
     card.addEventListener("click", function() {
       const cardName = this.innerText.split(" (")[0];
       
-      // Toggle della selezione
       if (this.classList.contains("selected")) {
-        // Se già selezionata, deseleziona
         this.classList.remove("selected");
         selected = selected.filter(t => t !== cardName);
       } else {
-        // Se non selezionata, seleziona (max 6)
         if (selected.length < 6) {
           this.classList.add("selected");
           selected.push(cardName);
         }
       }
       
-      // Aggiorna il bottone
       updateStartButton();
     });
   });
@@ -494,6 +689,130 @@ document.getElementById("startQuizBtn").addEventListener("click", function() {
     ? "Materie selezionate: " + selected.join(", ")
     : "Nessuna materia selezionata";
 });
+
+/* ============================
+   LOGICA DEL QUIZ
+   ============================ */
+
+let currentQuestionIndex = 0;
+let selectedAnswer = null;
+let quizQuestions = [];
+let currentMaterie = [];
+
+function startQuiz() {
+  const format = document.getElementById("format").value;
+  
+  if (format !== "mcq") {
+    alert("Formato non ancora disponibile");
+    return;
+  }
+
+  // Raccogli tutte le domande dalle materie selezionate
+  quizQuestions = [];
+  currentMaterie = selected;
+  
+  selected.forEach(materia => {
+    const questions = questionsBySubject[materia] || [];
+    quizQuestions = quizQuestions.concat(questions);
+  });
+
+  if (quizQuestions.length === 0) {
+    alert("Non ci sono domande disponibili per le materie selezionate");
+    return;
+  }
+
+  // Mescola le domande
+  quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
+
+  // Limita al numero di domande richiesto
+  const numQ = parseInt(document.getElementById("numQ").value);
+  quizQuestions = quizQuestions.slice(0, numQ);
+
+  currentQuestionIndex = 0;
+  selectedAnswer = null;
+
+  // Mostra la schermata quiz
+  document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "flex";
+
+  // Carica la prima domanda
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const question = quizQuestions[currentQuestionIndex];
+  
+  // Aggiorna header
+  document.getElementById("currentQuestion").textContent = currentQuestionIndex + 1;
+  document.getElementById("totalQuestions").textContent = quizQuestions.length;
+  document.getElementById("materiaQuiz").textContent = selected.join(", ");
+
+  // Aggiorna progress bar
+  const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+  document.getElementById("progressBar").style.width = progress + "%";
+
+  // Aggiorna domanda
+  document.getElementById("questionText").textContent = question.domanda;
+
+  // Crea le opzioni
+  const optionsContainer = document.getElementById("optionsContainer");
+  optionsContainer.innerHTML = "";
+  
+  const letters = ["A", "B", "C", "D"];
+  question.risposte.forEach((risposta, index) => {
+    const option = document.createElement("div");
+    option.className = "option";
+    option.innerHTML = `
+      <div class="option-letter">${letters[index]}</div>
+      <div>${risposta}</div>
+    `;
+    
+    option.addEventListener("click", () => {
+      selectAnswer(index, option);
+    });
+    
+    optionsContainer.appendChild(option);
+  });
+
+  // Reset bottone next
+  selectedAnswer = null;
+  document.getElementById("btnNext").classList.remove("show");
+}
+
+function selectAnswer(answerIndex, optionElement) {
+  if (selectedAnswer !== null) return; // Prevent double click
+
+  selectedAnswer = answerIndex;
+  const question = quizQuestions[currentQuestionIndex];
+  const allOptions = document.querySelectorAll(".option");
+
+  allOptions.forEach((opt, index) => {
+    if (index === question.corretta) {
+      opt.classList.add("correct");
+    } else if (index === answerIndex && answerIndex !== question.corretta) {
+      opt.classList.add("wrong");
+    } else if (index !== answerIndex) {
+      opt.classList.add("disabled");
+      opt.style.opacity = "0.5";
+    }
+  });
+
+  // Mostra bottone next
+  document.getElementById("btnNext").classList.add("show");
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  
+  if (currentQuestionIndex < quizQuestions.length) {
+    selectedAnswer = null;
+    loadQuestion();
+  } else {
+    // Quiz finito
+    alert("Quiz completato!");
+    goBack();
+  }
+}
 
 </script>
 
