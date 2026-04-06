@@ -42,7 +42,9 @@ header {
   font-size: 32px;
 }
 
-.icon { font-size: 34px; }
+.icon {
+  font-size: 34px;
+}
 
 .menu {
   display: flex;
@@ -78,12 +80,6 @@ header {
   border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  transition: 0.2s;
-}
-
-.language:hover {
-  background: #e8a6b8;
-  transform: scale(1.05);
 }
 
 .search-icon {
@@ -231,13 +227,8 @@ select {
   cursor: pointer;
   width: 100%;
 }
-
-#selectedMaterieLabel {
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: #6b3e2e;
-}
 </style>
+
 </head>
 
 <body>
@@ -251,7 +242,6 @@ select {
       <div class="menu-item">Risultati</div>
     </div>
   </div>
-
   <div class="header-right">
     <div class="language">IT ▼</div>
     <div class="search-icon">🔍</div>
@@ -260,28 +250,15 @@ select {
 
 <!-- HOME -->
 <div class="page" id="home" style="display:flex;">
-  <div class="card">
-    Casi clinici
-    <div class="subtitle">Analisi di casi reali e clinici</div>
-  </div>
-
-  <div class="card" onclick="showQuizConfig()">
-    Quiz completo
-    <div class="subtitle">Tutte le materie mescolate</div>
-  </div>
-
-  <div class="card" onclick="showMaterie()">
-    Quiz per materia
-    <div class="subtitle">Scegli una o più materie</div>
-  </div>
+  <div class="card">Casi clinici <div class="subtitle">Analisi di casi reali e clinici</div></div>
+  <div class="card" onclick="showQuizConfig()">Quiz completo <div class="subtitle">Tutte le materie mescolate</div></div>
+  <div class="card" onclick="showMaterie()">Quiz per materia <div class="subtitle">Scegli una o più materie</div></div>
 </div>
 
 <!-- QUIZ CONFIG -->
 <div class="page" id="quizConfig">
   <div class="config-box">
     <h3>Configura quiz</h3>
-
-    <div id="selectedMaterieLabel"></div>
 
     <label>Numero domande</label>
     <select id="numQ">
@@ -299,7 +276,7 @@ select {
 
     <label>Formato quiz</label>
     <select id="format">
-      <option value="mcq">Crocette (4 opzioni)</option>
+      <option value="mcq">Crocette</option>
       <option value="open">Risposta libera</option>
     </select>
 
@@ -321,7 +298,6 @@ select {
     </div>
 
     <div class="materie-grid">
-
       <div class="card">Psicologia generale</div>
       <div class="card">Psicologia sociale</div>
       <div class="card">Psicologia dello sviluppo</div>
@@ -348,14 +324,15 @@ select {
       <div class="card">Criminologia</div>
       <div class="card">Antropologia culturale</div>
       <div class="card">Pedagogia generale</div>
-
     </div>
+
   </div>
 </div>
 
-<script>
+<!-- SCRIPT ESTERNI (ORDINE GIUSTO) -->
+<script src="questions.js"></script>
 
-/* NAV */
+<script>
 function showHome() {
   document.getElementById("home").style.display = "flex";
   document.getElementById("materie").style.display = "none";
@@ -378,52 +355,6 @@ function startQuiz() {
   alert("Quiz avviato!");
 }
 
-/* =========================
-   DATABASE DOMANDE (FUTURO)
-   ========================= */
-
-const questionsBySubject = {
-  "Psicologia generale": [],
-  "Psicologia sociale": [],
-  "Psicologia dello sviluppo": [],
-  "Psicobiologia": [],
-  "Psicologia Clinica": [],
-  "Psichiatria": [],
-  "Psicologia dinamica": [],
-  "Storia della psicologia": [],
-  "Psicologia del lavoro": [],
-  "Psicologia cognitiva": [],
-  "Neuroscienze": [],
-  "Psicometria": [],
-  "Sociologia": [],
-  "Teorie e tecniche del colloquio": [],
-  "Teorie e tecniche dei test": [],
-  "Psicologia dell'adolescenza": [],
-  "Psicolinguistica": [],
-  "Filosofia della scienza": [],
-  "Psicologia Forense": [],
-  "Psicologia della disabilità": [],
-  "Biologia": [],
-  "Psicologia delle emozioni": [],
-  "Psicologia dell'educazione": [],
-  "Criminologia": [],
-  "Antropologia culturale": [],
-  "Pedagogia generale": []
-};
-
-/* aggiorna conteggi */
-function updateSubjectCounts() {
-  document.querySelectorAll("#materie .card").forEach(card => {
-    const name = card.innerText.split(" (")[0];
-    const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
-  });
-}
-
-/* inizializza subito */
-updateSubjectCounts();
-
-/* MULTI SELECT */
 let multiMode = false;
 let selected = [];
 
@@ -441,11 +372,11 @@ function toggleMultiMode() {
 
       if (this.classList.contains("selected")) {
         this.classList.remove("selected");
-        selected = selected.filter(t => t !== this.innerText.split(" (")[0]);
+        selected = selected.filter(t => t !== this.innerText);
       } else {
         if (selected.length >= 6) return;
         this.classList.add("selected");
-        selected.push(this.innerText.split(" (")[0]);
+        selected.push(this.innerText);
       }
 
       const btn = document.getElementById("startQuizBtn");
@@ -455,20 +386,19 @@ function toggleMultiMode() {
   });
 }
 
-/* start quiz da materie */
 document.getElementById("startQuizBtn").onclick = function () {
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
 
   const label = document.getElementById("selectedMaterieLabel");
-  label.innerText = selected.length
-    ? "Materie selezionate: " + selected.join(", ")
-    : "Nessuna materia selezionata";
+  if (label) {
+    label.innerText = selected.length
+      ? "Materie selezionate: " + selected.join(", ")
+      : "Nessuna materia selezionata";
+  }
 };
 
 </script>
 
-  <script src="questions.js"></script>
-  
 </body>
 </html>
