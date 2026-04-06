@@ -337,7 +337,7 @@ select {
       <div class="card">Psicolinguistica</div>
       <div class="card">Filosofia della scienza</div>
       <div class="card">Psicologia Forense</div>
-      <div class="card">Psicologia della disabilit��</div>
+      <div class="card">Psicologia della disabilità</div>
       <div class="card">Biologia</div>
       <div class="card">Psicologia delle emozioni</div>
       <div class="card">Psicologia dell'educazione</div>
@@ -434,34 +434,24 @@ function updateSubjectCounts() {
 setInterval(updateSubjectCounts, 500);
 
 /* ============================
-   SELEZIONE MATERIE (NEW)
+   SELEZIONE MATERIE (FIXED)
    ============================ */
 
 let selected = [];
 
 function initializeCardClickHandlers() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    card.onclick = function(event) {
+    card.onclick = function() {
       const cardName = this.innerText.split(" (")[0];
       
-      // Se Ctrl/Cmd non è premuto: seleziona solo questa
-      if (!event.ctrlKey && !event.metaKey) {
-        // Deseleziona tutte le altre
-        document.querySelectorAll("#materie .card").forEach(c => {
-          c.classList.remove("selected");
-        });
-        selected = [];
-        
-        // Seleziona questa
-        this.classList.add("selected");
-        selected = [cardName];
+      // Toggle della selezione
+      if (this.classList.contains("selected")) {
+        // Se già selezionata, deseleziona
+        this.classList.remove("selected");
+        selected = selected.filter(t => t !== cardName);
       } else {
-        // Ctrl/Cmd premuto: toggle della selezione
-        if (this.classList.contains("selected")) {
-          this.classList.remove("selected");
-          selected = selected.filter(t => t !== cardName);
-        } else {
-          if (selected.length >= 6) return;
+        // Se non selezionata, seleziona (max 6)
+        if (selected.length < 6) {
           this.classList.add("selected");
           selected.push(cardName);
         }
@@ -481,22 +471,4 @@ function updateStartButton() {
       ? "Inizia quiz" 
       : `Inizia quiz (${selected.length})`;
   } else {
-    btn.style.display = "none";
-  }
-}
-
-/* start quiz da materie */
-document.getElementById("startQuizBtn").onclick = function () {
-  document.getElementById("materie").style.display = "none";
-  document.getElementById("quizConfig").style.display = "flex";
-
-  const label = document.getElementById("selectedMaterieLabel");
-  label.innerText = selected.length
-    ? "Materie selezionate: " + selected.join(", ")
-    : "Nessuna materia selezionata";
-};
-
-</script>
-
-</body>
-</html>
+    btn.style.display = "none*
