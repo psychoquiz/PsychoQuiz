@@ -14,5 +14,27 @@ const questionsBySubject = {
 
   "Psicologia sociale": [],
   "Psicologia dello sviluppo": [],
-  "Psicobiologia": []
+  "Psicobiologia": [],
+  "Psicologia Clinica": [],
+  "Psichiatria": [],
+  "Psicologia dinamica": [],
+  "Storia della psicologia": [],
+  "Psicologia del lavoro": [],
+  "Psicologia cognitiva": [],
+  "Neuroscienze": [],
+  "Psicometria": [],
+  "Sociologia": [],
+  "Teorie e tecniche del colloquio": [],
+  "Teorie e tecniche dei test": [],
+  "Psicologia dell'adolescenza": [],
+  "Psicolinguistica": [],
+  "Filosofia della scienza": [],
+  "Psicologia Forense": [],
+  "Psicologia della disabilità": [],
+  "Biologia": [],
+  "Psicologia delle emozioni": [],
+  "Psicologia dell'educazione": [],
+  "Criminologia": [],
+  "Antropologia culturale": [],
+  "Pedagogia generale": []
 };
