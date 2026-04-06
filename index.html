@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
 
 <style>
-/* ===== IL TUO CSS ESISTENTE ===== */
 html, body {
   height: 100%;
   margin: 0;
@@ -490,6 +489,7 @@ select {
   
   .config-box h3 {
     font-size: 16px;
+    margin: 0 0 10px 0;
   }
   
   select {
@@ -534,6 +534,10 @@ select {
     padding: 8px 20px;
     font-size: 14px;
   }
+  
+  .quiz-buttons {
+    gap: 10px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -569,7 +573,379 @@ select {
 </style>
 </head>
 
-<!-- IL RESTO DEL TUO CODICE HTML RIMANE IDENTICO -->
-<!-- ... (tutto il body e script rimane uguale a prima) ... -->
+<body>
 
+<header>
+  <div class="left-header">
+    <div class="title"><span class="icon">Ψ</span> PsychoQuiz</div>
+    <div class="menu">
+      <div class="menu-item" onclick="showHome()">Home</div>
+      <div class="menu-item">Quiz</div>
+      <div class="menu-item">Risultati</div>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="language">IT ▼</div>
+    <div class="search-icon">🔍</div>
+  </div>
+</header>
+
+<!-- HOME -->
+<div class="page" id="home" style="display:flex;">
+  <div class="card">
+    Casi clinici
+    <div class="subtitle">Analisi di casi reali e clinici</div>
+  </div>
+
+  <div class="card" onclick="showQuizConfig()">
+    Quiz completo
+    <div class="subtitle">Tutte le materie mescolate</div>
+  </div>
+
+  <div class="card" onclick="showMaterie()">
+    Quiz per materia
+    <div class="subtitle">Scegli una o più materie</div>
+  </div>
+</div>
+
+<!-- QUIZ CONFIG -->
+<div class="page" id="quizConfig">
+  <div class="config-box">
+    <h3>Configura quiz</h3>
+
+    <div id="selectedMaterieLabel"></div>
+
+    <label>Numero domande</label>
+    <select id="numQ">
+      <option>5</option>
+      <option>10</option>
+      <option>15</option>
+    </select>
+
+    <label>Difficoltà</label>
+    <select id="diff">
+      <option>facile</option>
+      <option>medio</option>
+      <option>difficile</option>
+    </select>
+
+    <label>Formato quiz</label>
+    <select id="format">
+      <option value="mcq">Crocette (4 opzioni)</option>
+      <option value="open">Risposta libera</option>
+    </select>
+
+    <button class="start-btn" onclick="startQuiz()">Inizia quiz</button>
+  </div>
+</div>
+
+<!-- MATERIE -->
+<div class="page" id="materie">
+  <div class="materie-wrapper">
+
+    <div id="startQuizBtn">Inizia quiz</div>
+
+    <div class="materie-topbar">
+      <input id="materieSearch" type="text" placeholder="Cerca materia...">
+    </div>
+
+    <div class="materie-grid">
+
+      <div class="card">Psicologia generale</div>
+      <div class="card">Psicologia sociale</div>
+      <div class="card">Psicologia dello sviluppo</div>
+      <div class="card">Psicobiologia</div>
+      <div class="card">Psicologia Clinica</div>
+      <div class="card">Psichiatria</div>
+      <div class="card">Psicologia dinamica</div>
+      <div class="card">Storia della psicologia</div>
+      <div class="card">Psicologia del lavoro</div>
+      <div class="card">Psicologia cognitiva</div>
+      <div class="card">Neuroscienze</div>
+      <div class="card">Psicometria</div>
+      <div class="card">Sociologia</div>
+      <div class="card">Teorie e tecniche del colloquio</div>
+      <div class="card">Teorie e tecniche dei test</div>
+      <div class="card">Psicologia dell'adolescenza</div>
+      <div class="card">Psicolinguistica</div>
+      <div class="card">Filosofia della scienza</div>
+      <div class="card">Psicologia Forense</div>
+      <div class="card">Psicologia della disabilità</div>
+      <div class="card">Biologia</div>
+      <div class="card">Psicologia delle emozioni</div>
+      <div class="card">Psicologia dell'educazione</div>
+      <div class="card">Criminologia</div>
+      <div class="card">Antropologia culturale</div>
+      <div class="card">Pedagogia generale</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="page" id="quiz">
+  <div class="quiz-header">
+    <span>Domanda <span id="currentQuestion">1</span> di <span id="totalQuestions">5</span></span>
+    <span id="materiaQuiz">Psicologia generale</span>
+  </div>
+
+  <div class="quiz-progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="quiz-container">
+    <div class="question-text" id="questionText">Domanda qui</div>
+    
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="quiz-buttons">
+      <button class="btn-back" onclick="goBack()">Indietro</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARICA IL DATABASE DELLE DOMANDE -->
+<script src="questions.js"></script>
+
+<script>
+/* NAV */
+function showHome() {
+  document.getElementById("home").style.display = "flex";
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "none";
+  selected = [];
+  updateStartButton();
+}
+
+function showMaterie() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "flex";
+  document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "none";
+  updateSubjectCounts();
+  initializeCardClickHandlers();
+}
+
+function showQuizConfig() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "flex";
+  document.getElementById("quiz").style.display = "none";
+}
+
+function goBack() {
+  if (currentQuestionIndex === 0) {
+    document.getElementById("quizConfig").style.display = "flex";
+    document.getElementById("quiz").style.display = "none";
+    currentQuestionIndex = 0;
+    selectedAnswer = null;
+    userAnswers = [];
+  } else {
+    currentQuestionIndex--;
+    loadQuestion();
+  }
+}
+
+function updateSubjectCounts() {
+  document.querySelectorAll("#materie .card").forEach(card => {
+    const fullText = card.innerText;
+    const name = fullText.split(" (")[0];
+    const count = questionsBySubject[name]?.length || 0;
+    card.innerText = `${name} (${count})`;
+  });
+}
+
+setInterval(updateSubjectCounts, 500);
+
+let selected = [];
+
+function initializeCardClickHandlers() {
+  document.querySelectorAll("#materie .card").forEach(card => {
+    const newCard = card.cloneNode(true);
+    card.parentNode.replaceChild(newCard, card);
+  });
+
+  document.querySelectorAll("#materie .card").forEach(card => {
+    card.addEventListener("click", function() {
+      const cardName = this.innerText.split(" (")[0];
+      
+      if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        selected = selected.filter(t => t !== cardName);
+      } else {
+        if (selected.length < 6) {
+          this.classList.add("selected");
+          selected.push(cardName);
+        }
+      }
+      
+      updateStartButton();
+    });
+  });
+}
+
+function updateStartButton() {
+  const btn = document.getElementById("startQuizBtn");
+  if (selected.length > 0) {
+    btn.style.display = "block";
+    btn.innerText = selected.length === 1 
+      ? "Inizia quiz" 
+      : `Inizia quiz (${selected.length})`;
+  } else {
+    btn.style.display = "none";
+  }
+}
+
+document.getElementById("startQuizBtn").addEventListener("click", function() {
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "flex";
+
+  const label = document.getElementById("selectedMaterieLabel");
+  label.innerText = selected.length
+    ? "Materie selezionate: " + selected.join(", ")
+    : "Nessuna materia selezionata";
+});
+
+let currentQuestionIndex = 0;
+let selectedAnswer = null;
+let quizQuestions = [];
+let currentMaterie = [];
+let userAnswers = [];
+
+function startQuiz() {
+  const format = document.getElementById("format").value;
+  
+  if (format !== "mcq") {
+    alert("Formato non ancora disponibile");
+    return;
+  }
+
+  quizQuestions = [];
+  currentMaterie = selected;
+  
+  selected.forEach(materia => {
+    const questions = questionsBySubject[materia] || [];
+    quizQuestions = quizQuestions.concat(questions);
+  });
+
+  if (quizQuestions.length === 0) {
+    alert("Non ci sono domande disponibili per le materie selezionate");
+    return;
+  }
+
+  quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
+
+  const numQ = parseInt(document.getElementById("numQ").value);
+  quizQuestions = quizQuestions.slice(0, numQ);
+
+  currentQuestionIndex = 0;
+  selectedAnswer = null;
+  userAnswers = [];
+
+  document.getElementById("quizConfig").style.display = "none";
+  document.getElementById("quiz").style.display = "flex";
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const question = quizQuestions[currentQuestionIndex];
+  
+  document.getElementById("currentQuestion").textContent = currentQuestionIndex + 1;
+  document.getElementById("totalQuestions").textContent = quizQuestions.length;
+  document.getElementById("materiaQuiz").textContent = selected.join(", ");
+
+  const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+  document.getElementById("progressBar").style.width = progress + "%";
+
+  document.getElementById("questionText").textContent = question.domanda;
+
+  const optionsContainer = document.getElementById("optionsContainer");
+  optionsContainer.innerHTML = "";
+  
+  const letters = ["A", "B", "C", "D"];
+  question.risposte.forEach((risposta, index) => {
+    const option = document.createElement("div");
+    option.className = "option";
+    option.innerHTML = `
+      <div class="option-letter">${letters[index]}</div>
+      <div>${risposta}</div>
+    `;
+    
+    option.addEventListener("click", () => {
+      selectAnswer(index, option);
+    });
+    
+    optionsContainer.appendChild(option);
+  });
+
+  document.getElementById("btnNext").classList.remove("show");
+  
+  const savedAnswer = userAnswers[currentQuestionIndex];
+  if (savedAnswer !== undefined) {
+    const allOptions = document.querySelectorAll(".option");
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    
+    allOptions.forEach((opt, index) => {
+      opt.style.pointerEvents = "none";
+      if (index === currentQuestion.corretta) {
+        opt.classList.add("correct");
+      } else if (index === savedAnswer && savedAnswer !== currentQuestion.corretta) {
+        opt.classList.add("wrong");
+      }
+    });
+    
+    selectedAnswer = savedAnswer;
+    document.getElementById("btnNext").classList.add("show");
+  } else {
+    selectedAnswer = null;
+  }
+}
+
+function selectAnswer(answerIndex, optionElement) {
+  if (selectedAnswer !== null) return;
+
+  selectedAnswer = answerIndex;
+  userAnswers[currentQuestionIndex] = answerIndex;
+  
+  const question = quizQuestions[currentQuestionIndex];
+  const allOptions = document.querySelectorAll(".option");
+
+  allOptions.forEach((opt, index) => {
+    opt.style.pointerEvents = "none";
+    if (index === question.corretta) {
+      opt.classList.add("correct");
+    } else if (index === answerIndex && answerIndex !== question.corretta) {
+      opt.classList.add("wrong");
+    }
+  });
+
+  document.getElementById("btnNext").classList.add("show");
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  
+  if (currentQuestionIndex < quizQuestions.length) {
+    selectedAnswer = null;
+    loadQuestion();
+  } else {
+    let corrette = 0;
+    quizQuestions.forEach((question, index) => {
+      if (userAnswers[index] === question.corretta) {
+        corrette++;
+      }
+    });
+    const percentuale = Math.round((corrette / quizQuestions.length) * 100);
+    
+    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%`);
+    goBack();
+  }
+}
+</script>
+
+</body>
 </html>
