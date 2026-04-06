@@ -205,6 +205,7 @@ header {
   font-size: 15px;
   flex-direction: row;
   border: 2px solid #e6879c;
+  cursor: pointer;
 }
 
 .card.selected {
@@ -714,7 +715,7 @@ select {
 
 <!-- HOME -->
 <div class="page" id="home" style="display:flex;">
-  <div class="card">
+  <div class="card" onclick="showQuizConfig()">
     Casi clinici
     <div class="subtitle">Analisi di casi reali e simulati</div>
   </div>
@@ -771,41 +772,10 @@ select {
     <div id="startQuizBtn">Inizia quiz</div>
 
     <div class="materie-topbar">
-      <input id="materieSearch" type="text" placeholder="Cerca materia...">
+      <input id="materieSearch" type="text" placeholder="Cerca materia..." onkeyup="filterMaterie()">
     </div>
 
-    <div class="materie-grid">
-
-      <div class="card">Psicologia generale</div>
-      <div class="card">Psicologia sociale</div>
-      <div class="card">Psicologia dello sviluppo</div>
-      <div class="card">Psicobiologia</div>
-      <div class="card">Psicologia Clinica</div>
-      <div class="card">Psichiatria</div>
-      <div class="card">Psicologia dinamica</div>
-      <div class="card">Storia della psicologia</div>
-      <div class="card">Psicologia del lavoro</div>
-      <div class="card">Psicologia cognitiva</div>
-      <div class="card">Neuroscienze</div>
-      <div class="card">Psicometria</div>
-      <div class="card">Sociologia</div>
-      <div class="card">Teorie e tecniche del colloquio</div>
-      <div class="card">Teorie e tecniche dei test</div>
-      <div class="card">Psicologia dell'adolescenza</div>
-      <div class="card">Psicolinguistica</div>
-      <div class="card">Filosofia della scienza</div>
-      <div class="card">Psicologia Forense</div>
-      <div class="card">Psicologia della disabilità</div>
-      <div class="card">Biologia</div>
-      <div class="card">Psicologia delle emozioni</div>
-      <div class="card">Psicologia dell'educazione</div>
-      <div class="card">Criminologia</div>
-      <div class="card">Antropologia culturale</div>
-      <div class="card">Pedagogia generale</div>
-      <div class="card">Psicofarmacologia</div>
-      <div class="card">Counseling</div>
-
-    </div>
+    <div class="materie-grid" id="materieGrid"></div>
   </div>
 </div>
 
@@ -843,6 +813,77 @@ select {
 <script src="questions.js"></script>
 
 <script>
+// LISTA MATERIE
+const materieList = [
+  "Psicologia generale", "Psicologia sociale", "Psicologia dello sviluppo", "Psicobiologia",
+  "Psicologia Clinica", "Psichiatria", "Psicologia dinamica", "Storia della psicologia",
+  "Psicologia del lavoro", "Psicologia cognitiva", "Neuroscienze", "Psicometria",
+  "Sociologia", "Teorie e tecniche del colloquio", "Teorie e tecniche dei test",
+  "Psicologia dell'adolescenza", "Psicolinguistica", "Filosofia della scienza",
+  "Psicologia Forense", "Psicologia della disabilità", "Biologia", "Psicologia delle emozioni",
+  "Psicologia dell'educazione", "Criminologia", "Antropologia culturale", "Pedagogia generale",
+  "Psicofarmacologia", "Counseling"
+];
+
+// Popola la griglia delle materie
+function populateMaterieGrid() {
+  const grid = document.getElementById("materieGrid");
+  grid.innerHTML = "";
+  
+  materieList.forEach(materia => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-materia", materia);
+    const count = questionsBySubject[materia]?.length || 0;
+    card.textContent = `${materia} (${count})`;
+    card.onclick = () => toggleMaterieSelection(card, materia);
+    grid.appendChild(card);
+  });
+}
+
+// Filtra materie
+function filterMaterie() {
+  const searchTerm = document.getElementById("materieSearch").value.toLowerCase();
+  const cards = document.querySelectorAll("#materieGrid .card");
+  
+  cards.forEach(card => {
+    const materia = card.getAttribute("data-materia").toLowerCase();
+    if (materia.includes(searchTerm)) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// Toggle selezione materia
+function toggleMaterieSelection(card, materia) {
+  if (card.classList.contains("selected")) {
+    card.classList.remove("selected");
+    selected = selected.filter(m => m !== materia);
+  } else {
+    if (selected.length < 6) {
+      card.classList.add("selected");
+      selected.push(materia);
+    } else {
+      alert("Puoi selezionare massimo 6 materie per volta!");
+    }
+  }
+  updateStartButton();
+}
+
+// Aggiorna conteggi
+function updateSubjectCounts() {
+  const cards = document.querySelectorAll("#materieGrid .card");
+  cards.forEach(card => {
+    const materia = card.getAttribute("data-materia");
+    const count = questionsBySubject[materia]?.length || 0;
+    const originalText = materia;
+    card.textContent = `${originalText} (${count})`;
+    card.setAttribute("data-materia", originalText);
+  });
+}
+
 /* NAV */
 function showHome() {
   document.getElementById("home").style.display = "flex";
@@ -860,16 +901,31 @@ function showMaterie() {
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "none";
   document.getElementById("risultati").style.display = "none";
-  updateSubjectCounts();
-  initializeCardClickHandlers();
+  
+  if (document.getElementById("materieGrid").children.length === 0) {
+    populateMaterieGrid();
+  } else {
+    updateSubjectCounts();
+  }
 }
 
 function showQuizConfig() {
+  if (selected.length === 0 && document.getElementById("materie").style.display !== "flex") {
+    // Se non ci sono materie selezionate, mostra la pagina materie prima
+    showMaterie();
+    return;
+  }
+  
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
   document.getElementById("quiz").style.display = "none";
   document.getElementById("risultati").style.display = "none";
+
+  const label = document.getElementById("selectedMaterieLabel");
+  label.innerText = selected.length
+    ? "Materie selezionate: " + selected.join(", ")
+    : "Nessuna materia selezionata";
 }
 
 function showResults() {
@@ -894,52 +950,6 @@ function goBack() {
   }
 }
 
-function updateSubjectCounts() {
-  document.querySelectorAll("#materie .card").forEach(card => {
-    const fullText = card.innerText;
-    const name = fullText.split(" (")[0];
-    const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
-  });
-}
-
-setInterval(updateSubjectCounts, 500);
-
-let selected = [];
-
-function initializeCardClickHandlers() {
-  const cards = document.querySelectorAll("#materie .card");
-  
-  cards.forEach(card => {
-    // Rimuovi eventuali listener vecchi clonando
-    const newCard = card.cloneNode(true);
-    card.parentNode.replaceChild(newCard, card);
-  });
-  
-  const nuoveCards = document.querySelectorAll("#materie .card");
-  nuoveCards.forEach(card => {
-    card.addEventListener("click", function(e) {
-      e.stopPropagation();
-      const fullText = this.innerText;
-      const cardName = fullText.split(" (")[0];
-      
-      if (this.classList.contains("selected")) {
-        this.classList.remove("selected");
-        selected = selected.filter(t => t !== cardName);
-      } else {
-        if (selected.length < 6) {
-          this.classList.add("selected");
-          selected.push(cardName);
-        } else {
-          alert("Puoi selezionare massimo 6 materie!");
-        }
-      }
-      
-      updateStartButton();
-    });
-  });
-}
-
 function updateStartButton() {
   const btn = document.getElementById("startQuizBtn");
   if (selected.length > 0) {
@@ -953,19 +963,13 @@ function updateStartButton() {
 }
 
 document.getElementById("startQuizBtn").addEventListener("click", function() {
-  document.getElementById("materie").style.display = "none";
-  document.getElementById("quizConfig").style.display = "flex";
-
-  const label = document.getElementById("selectedMaterieLabel");
-  label.innerText = selected.length
-    ? "Materie selezionate: " + selected.join(", ")
-    : "Nessuna materia selezionata";
+  showQuizConfig();
 });
 
+let selected = [];
 let currentQuestionIndex = 0;
 let selectedAnswer = null;
 let quizQuestions = [];
-let currentMaterie = [];
 let userAnswers = [];
 
 function startQuiz() {
@@ -977,7 +981,6 @@ function startQuiz() {
   }
 
   quizQuestions = [];
-  currentMaterie = selected;
   
   selected.forEach(materia => {
     const questions = questionsBySubject[materia] || [];
@@ -991,7 +994,10 @@ function startQuiz() {
 
   quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
 
-  const numQ = parseInt(document.getElementById("numQ").value);
+  let numQ = parseInt(document.getElementById("numQ").value);
+  if (numQ > quizQuestions.length) {
+    numQ = quizQuestions.length;
+  }
   quizQuestions = quizQuestions.slice(0, numQ);
 
   currentQuestionIndex = 0;
@@ -1190,6 +1196,11 @@ function nextQuestion() {
     goBack();
   }
 }
+
+// Inizializzazione
+document.addEventListener("DOMContentLoaded", () => {
+  populateMaterieGrid();
+});
 </script>
 
 </body>
