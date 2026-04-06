@@ -587,34 +587,145 @@ select {
   }
 }
 
-@media (max-width: 480px) {
-  #materie .card {
-    width: 120px;
-    height: 45px;
-    font-size: 10px;
+/* ===== MEDIA QUERY PER TELEFONI ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 15px;
   }
   
-  .card {
-    width: 170px;
-    height: 95px;
-    font-size: 12px;
+  /* Riga 1: Titolo a sinistra, Discord e lingua a destra */
+  .left-header {
+    width: 100%;
+    justify-content: space-between;
+    order: 1;
   }
   
   .title {
-    font-size: 18px;
+    font-size: 22px;
   }
   
-  .quiz-container {
-    padding: 15px;
+  .icon {
+    font-size: 26px;
   }
   
-  .question-text {
+  .header-right {
+    order: 1;
+    margin-left: auto;
+  }
+  
+  /* Riga 2: Menu centrato */
+  .menu {
+    width: 100%;
+    justify-content: center;
+    order: 2;
+    gap: 15px;
+  }
+  
+  .menu-item {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  
+  .language, .search-icon, .discord-icon {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .discord-icon img {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .page {
+    margin-top: 30px;
+    gap: 15px;
+  }
+  
+  .card {
+    width: 200px;
+    height: 110px;
     font-size: 14px;
   }
   
-  .option {
-    padding: 8px;
+  .subtitle {
+    font-size: 10px;
+  }
+  
+  .materie-grid {
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  #materie .card {
+    width: 140px;
+    height: 50px;
     font-size: 12px;
+  }
+  
+  #startQuizBtn {
+    width: 220px;
+    font-size: 18px;
+    padding: 12px 0;
+    top: -35px;
+  }
+  
+  .config-box {
+    width: 220px;
+    padding: 15px;
+  }
+  
+  .config-box h3 {
+    font-size: 16px;
+    margin: 0 0 10px 0;
+  }
+  
+  select {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  .start-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .quiz-container {
+    padding: 20px;
+    margin: 0 15px;
+  }
+  
+  .question-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .option {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .option-letter {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    font-size: 12px;
+  }
+  
+  .quiz-header {
+    font-size: 13px;
+    padding: 0 15px;
+  }
+  
+  .btn-back, .btn-next {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  
+  .quiz-buttons {
+    gap: 10px;
   }
 }
 </style>
