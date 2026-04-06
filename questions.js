@@ -74,7 +74,7 @@ const questionsBySubject = {
   "Psicologia dell'educazione": [],
   "Criminologia": [],
   "Antropologia culturale": [],
-  "Pedagogia generale": []
-  "Psicofarmacologia": []
+  "Pedagogia generale": [],
+  "Psicofarmacologia": [],
   "Counseling": []
 };
