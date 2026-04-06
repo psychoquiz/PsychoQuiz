@@ -588,10 +588,18 @@ function showQuizConfig() {
 }
 
 function goBack() {
-  document.getElementById("quizConfig").style.display = "flex";
-  document.getElementById("quiz").style.display = "none";
-  currentQuestionIndex = 0;
-  selectedAnswer = null;
+  // Se siamo nella prima domanda, torna alla configurazione
+  if (currentQuestionIndex === 0) {
+    document.getElementById("quizConfig").style.display = "flex";
+    document.getElementById("quiz").style.display = "none";
+    currentQuestionIndex = 0;
+    selectedAnswer = null;
+  } else {
+    // Torna alla domanda precedente
+    currentQuestionIndex--;
+    selectedAnswer = null;
+    loadQuestion();
+  }
 }
 
 /* ⭐ AGGIORNA CONTEGGI DINAMICAMENTE ⭐ */
