@@ -4,6 +4,7 @@
 <title>PsychoQuiz GitHub - Quiz di Psicologia Online</title>
 
 <meta name="google-site-verification" content="Oftahp3yLVsmYHEXx1s6UvEe3Yze6kEMNYgIoSQl3_k" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -421,6 +422,168 @@ select {
   background: #d88fa6;
   transform: scale(1.05);
 }
+
+/* ===== MEDIA QUERY PER TELEFONI ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 15px;
+  }
+  
+  .left-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .title {
+    font-size: 22px;
+  }
+  
+  .icon {
+    font-size: 26px;
+  }
+  
+  .menu {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .menu-item {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  
+  .header-right {
+    margin-left: auto;
+  }
+  
+  .language, .search-icon {
+    font-size: 14px;
+  }
+  
+  .page {
+    margin-top: 30px;
+    gap: 15px;
+  }
+  
+  .card {
+    width: 200px;
+    height: 110px;
+    font-size: 14px;
+  }
+  
+  .subtitle {
+    font-size: 10px;
+  }
+  
+  .materie-grid {
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  #materie .card {
+    width: 140px;
+    height: 50px;
+    font-size: 12px;
+  }
+  
+  #startQuizBtn {
+    width: 220px;
+    font-size: 18px;
+    padding: 12px 0;
+    top: -35px;
+  }
+  
+  .config-box {
+    width: 220px;
+    padding: 15px;
+  }
+  
+  .config-box h3 {
+    font-size: 16px;
+    margin: 0 0 10px 0;
+  }
+  
+  select {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  .start-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .quiz-container {
+    padding: 20px;
+    margin: 0 15px;
+  }
+  
+  .question-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .option {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .option-letter {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    font-size: 12px;
+  }
+  
+  .quiz-header {
+    font-size: 13px;
+    padding: 0 15px;
+  }
+  
+  .btn-back, .btn-next {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  
+  .quiz-buttons {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #materie .card {
+    width: 120px;
+    height: 45px;
+    font-size: 10px;
+  }
+  
+  .card {
+    width: 170px;
+    height: 95px;
+    font-size: 12px;
+  }
+  
+  .title {
+    font-size: 18px;
+  }
+  
+  .quiz-container {
+    padding: 15px;
+  }
+  
+  .question-text {
+    font-size: 14px;
+  }
+  
+  .option {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 
@@ -587,25 +750,19 @@ function showQuizConfig() {
   document.getElementById("quiz").style.display = "none";
 }
 
-/* ============================
-   FUNZIONE INDietro MODIFICATA
-   ============================ */
 function goBack() {
-  // Se siamo nella prima domanda, torna alla configurazione
   if (currentQuestionIndex === 0) {
     document.getElementById("quizConfig").style.display = "flex";
     document.getElementById("quiz").style.display = "none";
     currentQuestionIndex = 0;
     selectedAnswer = null;
-    userAnswers = [];  // RESET DELLE RISPOSTE
+    userAnswers = [];
   } else {
-    // Torna alla domanda precedente
     currentQuestionIndex--;
     loadQuestion();
   }
 }
 
-/* ⭐ AGGIORNA CONTEGGI DINAMICAMENTE ⭐ */
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
     const fullText = card.innerText;
@@ -615,12 +772,7 @@ function updateSubjectCounts() {
   });
 }
 
-/* 🔄 Aggiorna ogni 500ms */
 setInterval(updateSubjectCounts, 500);
-
-/* ============================
-   SELEZIONE MATERIE
-   ============================ */
 
 let selected = [];
 
@@ -661,7 +813,6 @@ function updateStartButton() {
   }
 }
 
-/* start quiz da materie */
 document.getElementById("startQuizBtn").addEventListener("click", function() {
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "flex";
@@ -672,15 +823,11 @@ document.getElementById("startQuizBtn").addEventListener("click", function() {
     : "Nessuna materia selezionata";
 });
 
-/* ============================
-   LOGICA DEL QUIZ MODIFICATA CON SALVATAGGIO RISPOSTE
-   ============================ */
-
 let currentQuestionIndex = 0;
 let selectedAnswer = null;
 let quizQuestions = [];
 let currentMaterie = [];
-let userAnswers = [];  // Array per salvare le risposte degli utenti
+let userAnswers = [];
 
 function startQuiz() {
   const format = document.getElementById("format").value;
@@ -690,7 +837,6 @@ function startQuiz() {
     return;
   }
 
-  // Raccogli tutte le domande dalle materie selezionate
   quizQuestions = [];
   currentMaterie = selected;
   
@@ -704,41 +850,33 @@ function startQuiz() {
     return;
   }
 
-  // Mescola le domande
   quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
 
-  // Limita al numero di domande richiesto
   const numQ = parseInt(document.getElementById("numQ").value);
   quizQuestions = quizQuestions.slice(0, numQ);
 
   currentQuestionIndex = 0;
   selectedAnswer = null;
-  userAnswers = [];  // RESET DELLE RISPOSTE PER IL NUOVO QUIZ
+  userAnswers = [];
 
-  // Mostra la schermata quiz
   document.getElementById("quizConfig").style.display = "none";
   document.getElementById("quiz").style.display = "flex";
 
-  // Carica la prima domanda
   loadQuestion();
 }
 
 function loadQuestion() {
   const question = quizQuestions[currentQuestionIndex];
   
-  // Aggiorna header
   document.getElementById("currentQuestion").textContent = currentQuestionIndex + 1;
   document.getElementById("totalQuestions").textContent = quizQuestions.length;
   document.getElementById("materiaQuiz").textContent = selected.join(", ");
 
-  // Aggiorna progress bar
   const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
   document.getElementById("progressBar").style.width = progress + "%";
 
-  // Aggiorna domanda
   document.getElementById("questionText").textContent = question.domanda;
 
-  // Crea le opzioni
   const optionsContainer = document.getElementById("optionsContainer");
   optionsContainer.innerHTML = "";
   
@@ -758,13 +896,10 @@ function loadQuestion() {
     optionsContainer.appendChild(option);
   });
 
-  // Reset bottone next
   document.getElementById("btnNext").classList.remove("show");
   
-  // RIPRISTINA LA RISPOSTA SE GIÀ ESISTE
   const savedAnswer = userAnswers[currentQuestionIndex];
   if (savedAnswer !== undefined) {
-    // Applica lo stile alla risposta salvata
     const allOptions = document.querySelectorAll(".option");
     const currentQuestion = quizQuestions[currentQuestionIndex];
     
@@ -788,8 +923,6 @@ function selectAnswer(answerIndex, optionElement) {
   if (selectedAnswer !== null) return;
 
   selectedAnswer = answerIndex;
-  
-  // SALVA LA RISPOSTA DELL'UTENTE
   userAnswers[currentQuestionIndex] = answerIndex;
   
   const question = quizQuestions[currentQuestionIndex];
@@ -814,7 +947,6 @@ function nextQuestion() {
     selectedAnswer = null;
     loadQuestion();
   } else {
-    // Calcola il punteggio
     let corrette = 0;
     quizQuestions.forEach((question, index) => {
       if (userAnswers[index] === question.corretta) {
