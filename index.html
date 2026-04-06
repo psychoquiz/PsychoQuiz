@@ -154,6 +154,12 @@ header {
   width: 240px;
   text-align: center;
   padding: 12px 0;
+  transition: 0.2s;
+}
+
+#startQuizBtn:hover {
+  background: #e8a6b8;
+  transform: scale(1.05);
 }
 
 .materie-topbar {
@@ -171,13 +177,6 @@ header {
   outline: none;
   text-align: center;
   font-size: 14px;
-}
-
-.multi-toggle {
-  font-size: 13px;
-  color: #6b3e2e;
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 .materie-grid {
@@ -315,9 +314,6 @@ select {
 
     <div class="materie-topbar">
       <input id="materieSearch" type="text" placeholder="Cerca materia...">
-      <div class="multi-toggle" onclick="toggleMultiMode()">
-        Clicca qui se vuoi selezionare più materie
-      </div>
     </div>
 
     <div class="materie-grid">
@@ -341,7 +337,7 @@ select {
       <div class="card">Psicolinguistica</div>
       <div class="card">Filosofia della scienza</div>
       <div class="card">Psicologia Forense</div>
-      <div class="card">Psicologia della disabilità</div>
+      <div class="card">Psicologia della disabilit��</div>
       <div class="card">Biologia</div>
       <div class="card">Psicologia delle emozioni</div>
       <div class="card">Psicologia dell'educazione</div>
@@ -366,7 +362,8 @@ function showMaterie() {
   document.getElementById("home").style.display = "none";
   document.getElementById("materie").style.display = "flex";
   document.getElementById("quizConfig").style.display = "none";
-  updateSubjectCounts(); // 🔄 Aggiorna i conteggi quando mostri la pagina
+  updateSubjectCounts();
+  initializeCardClickHandlers();
 }
 
 function showQuizConfig() {
@@ -380,7 +377,7 @@ function startQuiz() {
 }
 
 /* =========================
-   DATABASE DOMANDE (FUTURO)
+   DATABASE DOMANDE
    ========================= */
 
 const questionsBySubject = {
@@ -427,52 +424,65 @@ const questionsBySubject = {
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
     const fullText = card.innerText;
-    // Estrae il nome senza il conteggio precedente
     const name = fullText.split(" (")[0];
-    
-    // Conta le domande dalla lista
     const count = questionsBySubject[name]?.length || 0;
-    
-    // Aggiorna il testo della card
     card.innerText = `${name} (${count})`;
   });
 }
 
-/* 🔄 Aggiorna ogni 500ms (monitoraggio continuo) */
+/* 🔄 Aggiorna ogni 500ms */
 setInterval(updateSubjectCounts, 500);
 
-/* MULTI SELECT */
-let multiMode = false;
+/* ============================
+   SELEZIONE MATERIE (NEW)
+   ============================ */
+
 let selected = [];
 
-function toggleMultiMode() {
-  multiMode = !multiMode;
-  selected = [];
-
+function initializeCardClickHandlers() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    card.onclick = function () {
-
-      if (!multiMode) {
-        alert(this.innerText);
-        return;
-      }
-
+    card.onclick = function(event) {
       const cardName = this.innerText.split(" (")[0];
-
-      if (this.classList.contains("selected")) {
-        this.classList.remove("selected");
-        selected = selected.filter(t => t !== cardName);
-      } else {
-        if (selected.length >= 6) return;
+      
+      // Se Ctrl/Cmd non è premuto: seleziona solo questa
+      if (!event.ctrlKey && !event.metaKey) {
+        // Deseleziona tutte le altre
+        document.querySelectorAll("#materie .card").forEach(c => {
+          c.classList.remove("selected");
+        });
+        selected = [];
+        
+        // Seleziona questa
         this.classList.add("selected");
-        selected.push(cardName);
+        selected = [cardName];
+      } else {
+        // Ctrl/Cmd premuto: toggle della selezione
+        if (this.classList.contains("selected")) {
+          this.classList.remove("selected");
+          selected = selected.filter(t => t !== cardName);
+        } else {
+          if (selected.length >= 6) return;
+          this.classList.add("selected");
+          selected.push(cardName);
+        }
       }
-
-      const btn = document.getElementById("startQuizBtn");
-      btn.style.display = selected.length ? "block" : "none";
-      btn.innerText = "Inizia quiz (" + selected.length + ")";
+      
+      // Aggiorna il bottone
+      updateStartButton();
     };
   });
+}
+
+function updateStartButton() {
+  const btn = document.getElementById("startQuizBtn");
+  if (selected.length > 0) {
+    btn.style.display = "block";
+    btn.innerText = selected.length === 1 
+      ? "Inizia quiz" 
+      : `Inizia quiz (${selected.length})`;
+  } else {
+    btn.style.display = "none";
+  }
 }
 
 /* start quiz da materie */
