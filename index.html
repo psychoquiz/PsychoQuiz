@@ -356,6 +356,8 @@ function showHome() {
   document.getElementById("home").style.display = "flex";
   document.getElementById("materie").style.display = "none";
   document.getElementById("quizConfig").style.display = "none";
+  selected = []; // Reset selezione
+  updateStartButton();
 }
 
 function showMaterie() {
@@ -434,14 +436,21 @@ function updateSubjectCounts() {
 setInterval(updateSubjectCounts, 500);
 
 /* ============================
-   SELEZIONE MATERIE (FIXED)
+   SELEZIONE MATERIE
    ============================ */
 
 let selected = [];
 
 function initializeCardClickHandlers() {
+  // RIMUOVI i vecchi event listener clonando i nodi
   document.querySelectorAll("#materie .card").forEach(card => {
-    card.onclick = function() {
+    const newCard = card.cloneNode(true);
+    card.parentNode.replaceChild(newCard, card);
+  });
+
+  // ORA aggiungi i nuovi event listener
+  document.querySelectorAll("#materie .card").forEach(card => {
+    card.addEventListener("click", function() {
       const cardName = this.innerText.split(" (")[0];
       
       // Toggle della selezione
@@ -459,7 +468,7 @@ function initializeCardClickHandlers() {
       
       // Aggiorna il bottone
       updateStartButton();
-    };
+    });
   });
 }
 
@@ -471,4 +480,22 @@ function updateStartButton() {
       ? "Inizia quiz" 
       : `Inizia quiz (${selected.length})`;
   } else {
-    btn.style.display = "none*
+    btn.style.display = "none";
+  }
+}
+
+/* start quiz da materie */
+document.getElementById("startQuizBtn").addEventListener("click", function() {
+  document.getElementById("materie").style.display = "none";
+  document.getElementById("quizConfig").style.display = "flex";
+
+  const label = document.getElementById("selectedMaterieLabel");
+  label.innerText = selected.length
+    ? "Materie selezionate: " + selected.join(", ")
+    : "Nessuna materia selezionata";
+});
+
+</script>
+
+</body>
+</html>
