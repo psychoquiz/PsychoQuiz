@@ -414,15 +414,21 @@ const questionsBySubject = {
 /* aggiorna conteggi */
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    const name = card.innerText.split(" (")[0];
+
+    const name = card.innerText.replace(/\s\(\d+\)/, "").trim();
+
     const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
+
+    // NON distruggiamo struttura, solo aggiorniamo testo
+    card.innerHTML = `
+      ${name} <span style="opacity:0.6">(${count})</span>
+    `;
   });
 }
 
 /* inizializza subito */
 updateSubjectCounts();
-
+setTimeout(updateSubjectCounts, 50);
 /* MULTI SELECT */
 let multiMode = false;
 let selected = [];
