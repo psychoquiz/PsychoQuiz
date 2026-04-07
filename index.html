@@ -707,16 +707,12 @@ select {
     height: auto;
     width: 100%;
   }
-
-    /* SPOSTA IL BOTTONE PIÙ IN BASSO */
-  .materie-topbar {
-    margin-top: 70px;  /* aumento lo spazio sopra */
-  }
-  
+ /* NASCONDI IL BOTTONE ASSOLUTO E NE CREO UNO NUOVO */
   #startQuizBtn {
-    top: -30px;  /* lo sposto meno in alto */
-    position: relative;  /* cambio da absolute a relative */
-    margin-bottom: 10px;
+    position: relative;
+    top: 0;
+    margin: 20px auto 10px auto;
+    display: block;
   }
   
   #home .card {
