@@ -708,8 +708,8 @@ select {
   </div>
 
   <div class="header-right">
-    <div class="language">IT ▼</div>
-    <div class="search-icon">🔍</div>
+    <div class="language" onclick="changeLanguage()">IT ▼</div>
+    <div class="search-icon" onclick="searchSite()">🔍</div>
   </div>
 </header>
 
@@ -1207,6 +1207,20 @@ function nextQuestion() {
       if (userAnswers[index] === question.corretta) {
         corrette++;
       }
+      // ... tutte le altre funzioni ...
+
+function changeLanguage() {
+  if (confirm("Passare alla versione inglese? / Switch to English version?")) {
+    window.location.href = "index_en.html";
+  }
+}
+
+function searchSite() {
+  let searchTerm = prompt("🔍 Cerca nel sito:", "");
+  if (searchTerm && searchTerm.trim() !== "") {
+    alert("Funzionalità di ricerca in sviluppo. Cercavi: " + searchTerm);
+  }
+}
     });
     const percentuale = Math.round((corrette / quizQuestions.length) * 100);
     
