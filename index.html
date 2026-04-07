@@ -520,43 +520,51 @@ select {
 /* ===== MEDIA QUERY PER TELEFONI ===== */
 @media (max-width: 768px) {
   header {
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
   }
   
-.left-header {
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
+  .left-header {
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1;
+  }
   
   .title {
-    font-size: 22px;
+    font-size: 22px !important;
+    text-shadow: 2px 2px 0 #6b3e2e;
+    order: 2;
   }
   
   .icon {
-    font-size: 26px;
+    font-size: 22px;
   }
   
   .menu {
     width: 100%;
     justify-content: center;
-    gap: 15px;
+    order: 3;
+    margin-top: 10px;
   }
   
-  .menu-item {
-    padding: 5px 12px;
-    font-size: 12px;
+  .header-right {
+    width: auto;
+    display: flex;
+    gap: 10px;
+    order: 1;
   }
   
-.header-right {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  gap: 10px;
+  .language {
+    order: 1;
+  }
+  
+  .search-icon {
+    order: 2;
+  }
 }
 
 .language {
