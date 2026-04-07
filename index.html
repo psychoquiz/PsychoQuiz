@@ -757,25 +757,6 @@ select {
     padding: 20px;
   }
 }
-  /* Rimuove striscia rosa sotto le materie */
-.materie-wrapper,
-.materie-grid,
-#materie {
-  background: transparent;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-  .materie-grid {
-  background: transparent;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-  .materie-wrapper,
-.materie-grid,
-#materie {
-  background: transparent !important;
-}
   
   /* Titolo più grande e contorno su mobile */
 @media (max-width: 768px) {
@@ -783,6 +764,27 @@ select {
     font-size: 26px !important;
     text-shadow: 2px 2px 0 #6b3e2e;
   }
+}
+
+  body, html {
+  min-height: 100%;
+}
+
+#materie {
+  background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
+  padding-bottom: 20px;
+}
+
+.materie-grid {
+  background: transparent;
+}
+#materie {
+  background: linear-gradient(135deg, #f7e6e0, #f3c6d0);
+  padding-bottom: 20px;
+}
+
+.materie-grid {
+  background: transparent;
 }
   
 </style>
