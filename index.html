@@ -707,12 +707,23 @@ select {
     height: auto;
     width: 100%;
   }
- /* NASCONDI IL BOTTONE ASSOLUTO E NE CREO UNO NUOVO */
-  #startQuizBtn {
+
+   /* SISTEMA IL BOTTONE */
+  .materie-wrapper {
     position: relative;
-    top: 0;
-    margin: 20px auto 10px auto;
-    display: block;
+    padding-top: 50px;  /* crea spazio per il bottone */
+  }
+
+    #startQuizBtn {
+    position: absolute;
+    top: 5px;  /* lo metto in alto dentro lo spazio creato */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    font-size: 16px;
+    padding: 10px 0;
+    margin: 0;
+    z-index: 5;
   }
   
   #home .card {
