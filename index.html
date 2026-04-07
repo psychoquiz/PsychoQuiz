@@ -694,28 +694,43 @@ select {
 }
 /* Piccoli aggiustamenti per mobile */
 @media (max-width: 768px) {
+  /* MATERIE - 3 COLONNE */
   .materie-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
   
+  #materie .card {
+    font-size: 11px;
+    padding: 8px 4px;
+    min-height: 55px;
+  }
+  
+  /* CARD HOME */
   #home .card {
     width: 280px;
+    font-size: 18px;
+  }
+  
+  #home .subtitle {
+    font-size: 13px;
   }
   
   .quiz-container {
     margin: 0 10px;
     padding: 20px;
   }
-  
-  /* AUMENTO GRANDEZZA SCRITTE CARD HOME */
-  #home .card {
-    font-size: 18px;
+}
+
+/* PER TELEFONI PICCOLI - se non entrano 3 colonne, diventa 2 */
+@media (max-width: 480px) {
+  .materie-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   
-  #home .subtitle {
-    font-size: 13px;
+  #materie .card {
+    font-size: 12px;
   }
 }
   
