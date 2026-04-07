@@ -662,325 +662,56 @@ select {
   }
 }
 
-/* ===== MEDIA QUERY PER TELEFONI (MIGLIORATA) ===== */
-@media (max-width: 768px) {
-  /* HEADER COMPATTO */
-  header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 8px 12px;
-    gap: 8px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .left-header {
-    width: auto;
-    flex: 1;
-    gap: 12px;
-  }
-  
-  .title {
-    font-size: 18px;
-    gap: 5px;
-  }
-  
-  .icon {
-    font-size: 22px;
-  }
-  
-  .menu {
-    gap: 6px;
-  }
-  
-  .menu-item {
-    padding: 4px 10px;
-    font-size: 11px;
-  }
-  
-  .header-right {
-    margin-left: 0;
-    gap: 8px;
-  }
-  
-  .language {
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-  
-  .search-icon {
-    font-size: 16px;
-  }
-  
-  /* PAGINE - PIÙ COMPATTE */
-  .page {
-    margin-top: 20px;
-    gap: 12px;
-    padding: 0 12px;
-  }
-  
-  /* CARD HOME - FULL WIDTH */
-  #home {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  #home .card {
-    width: 100%;
-    max-width: none;
-    height: auto;
-    min-height: 80px;
-    padding: 15px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  
-  .subtitle {
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  
-  /* MATERIE GRID - 2 COLONNE */
-  .materie-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  #materie .card {
-    width: 100%;
-    height: auto;
-    min-height: 55px;
-    font-size: 12px;
-    padding: 10px 5px;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  
-  /* BARRA RICERCA MATERIE */
-  .materie-topbar {
-    margin-top: 50px;
-    width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
-  
-  #materieSearch {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  
-  /* BOTTONE START QUIZ */
-  .materie-wrapper {
-    position: relative;
-    width: 100%;
-  }
-  
-  #startQuizBtn {
-    width: calc(100% - 24px);
-    max-width: 280px;
-    font-size: 16px;
-    padding: 12px 0;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* CONFIGURAZIONE QUIZ */
-  .config-box {
-    width: calc(100% - 24px);
-    max-width: 320px;
-    padding: 18px;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-  
-  .config-box h3 {
-    font-size: 18px;
-    margin: 0 0 15px 0;
-  }
-  
-  select, .start-btn {
-    font-size: 14px;
-    padding: 10px;
-  }
-  
-  /* SCHERMATA QUIZ */
-  #quiz {
-    margin-top: 10px;
-    padding: 10px;
-  }
-  
-  .quiz-header {
-    font-size: 13px;
-    padding: 0 5px;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-  
-  .quiz-container {
-    padding: 18px;
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .question-text {
-    font-size: 16px;
-    line-height: 1.4;
-    margin-bottom: 20px;
-  }
-  
-  .option {
-    padding: 12px;
-    font-size: 13px;
-    gap: 10px;
-  }
-  
-  .option-letter {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    font-size: 14px;
-  }
-  
-  .quiz-buttons {
-    gap: 12px;
-    margin-top: 25px;
-  }
-  
-  .btn-back, .btn-next {
-    padding: 10px 20px;
-    font-size: 14px;
-    flex: 1;
-    max-width: 140px;
-  }
-  
-  /* PAGINA RISULTATI */
-  .results-stats {
-    gap: 10px;
-    padding: 0 5px;
-  }
-  
-  .stat-card {
-    padding: 10px 12px;
-    min-width: 70px;
-  }
-  
-  .stat-value {
-    font-size: 20px;
-  }
-  
-  .stat-label {
-    font-size: 11px;
-  }
-  
-  .results-list {
-    width: 100%;
-    padding: 15px;
-    max-height: 350px;
-    box-sizing: border-box;
-  }
-  
-  .result-item {
-    padding: 10px 12px;
-  }
-  
-  .result-score {
-    font-size: 15px;
-  }
-  
-  .result-details {
-    font-size: 11px;
-  }
-  
-  .clear-btn {
-    padding: 10px 18px;
-    font-size: 14px;
-    width: auto;
-    margin-top: 15px;
-  }
-  
-  /* PAGINA CONTATTI */
-  #contatti .config-box {
-    width: calc(100% - 24px);
-    border: 2px dashed #6b3e2e;
-  }
-  
-  #contatti p {
-    font-size: 13px;
-  }
-  
-  #contatti a {
-    font-size: 12px;
-    word-break: break-all;
-  }
-}
-
-/* TELEFONI PICCOLI (fino a 480px) */
 @media (max-width: 480px) {
-  .materie-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  
   #materie .card {
-    min-height: 48px;
-    font-size: 13px;
-  }
-  
-  .title {
-    font-size: 16px;
-  }
-  
-  .menu-item {
-    padding: 3px 8px;
+    width: 120px;
+    height: 45px;
     font-size: 10px;
   }
   
+  .card {
+    width: 170px;
+    height: 95px;
+    font-size: 12px;
+  }
+  
+  .title {
+    font-size: 18px;
+  }
+  
   .quiz-container {
     padding: 15px;
   }
   
   .question-text {
-    font-size: 15px;
+    font-size: 14px;
   }
   
   .option {
-    padding: 10px;
+    padding: 8px;
     font-size: 12px;
   }
-  
-  .results-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-  
-  .stat-card {
-    padding: 8px;
-  }
 }
+</style>
+</head>
 
-/* Aggiungi anche questo per evitare overflow */
-* {
-  max-width: 100%;
-  box-sizing: border-box;
-}
+<body>
 
-body {
-  overflow-x: hidden;
-}
+<header>
+  <div class="left-header">
+    <div class="title"><span class="icon">Ψ</span> PsychoQuiz</div>
+    <div class="menu">
+      <div class="menu-item" onclick="showHome()">Home</div>
+      <div class="menu-item" onclick="showResults()">Risultati</div>
+      <div class="menu-item" onclick="showContatti()">Contatti</div>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="language" onclick="changeLanguage()">IT ▼</div>
+    <div class="search-icon" onclick="searchSite()">🔍</div>
+  </div>
+</header>
 
 <!-- HOME -->
 <!-- HOME -->
@@ -1499,20 +1230,6 @@ function searchSite() {
     alert("Funzionalità di ricerca in sviluppo. Cercavi: " + searchTerm);
   }
 }
-  // MIGLIORAMENTI PER DISPOSITIVI MOBILE
-document.addEventListener('touchstart', function() {}, { passive: true });
-
-// Aggiungi feedback tattile per i pulsanti
-const allButtons = document.querySelectorAll('.card, .menu-item, .start-btn, .btn-back, .btn-next, .clear-btn');
-allButtons.forEach(btn => {
-  btn.addEventListener('touchstart', function() {
-    this.style.transform = 'scale(0.98)';
-  });
-  btn.addEventListener('touchend', function() {
-    this.style.transform = '';
-  });
-});
-  
 
 </script>
 </body>
