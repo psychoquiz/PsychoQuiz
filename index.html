@@ -708,19 +708,20 @@ select {
     width: 100%;
   }
 
- /* AGGIUNGO UN PICCOLO SPAZIO IN ALTO */
-  .materie-topbar {
-    margin-top: 45px;  /* spazio giusto per il bottone */
+  /* SISTEMA IL BOTTONE */
+  .materie-wrapper {
+    position: relative;
+    padding-top: 50px;  /* crea spazio per il bottone */
   }
   
   #startQuizBtn {
     position: absolute;
-    top: -40px;
+    top: 5px;  /* lo metto in alto dentro lo spazio creato */
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
-    font-size: 14px;
-    padding: 8px 0;
+    font-size: 16px;
+    padding: 10px 0;
     margin: 0;
     z-index: 5;
   }
