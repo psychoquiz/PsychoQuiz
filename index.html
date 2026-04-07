@@ -1207,8 +1207,17 @@ function nextQuestion() {
       if (userAnswers[index] === question.corretta) {
         corrette++;
       }
-      // ... tutte le altre funzioni ...
+    });
+    const percentuale = Math.round((corrette / quizQuestions.length) * 100);
+    
+    saveResult(corrette, quizQuestions.length, percentuale);
+    
+    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%\n\nIl risultato è stato salvato!`);
+    goBack();
+  }
+}
 
+// ===== FUNZIONI NUOVE (metterle QUI, DOPO nextQuestion, PRIMA di </script>) =====
 function changeLanguage() {
   if (confirm("Passare alla versione inglese? / Switch to English version?")) {
     window.location.href = "index_en.html";
@@ -1221,16 +1230,7 @@ function searchSite() {
     alert("Funzionalità di ricerca in sviluppo. Cercavi: " + searchTerm);
   }
 }
-    });
-    const percentuale = Math.round((corrette / quizQuestions.length) * 100);
-    
-    saveResult(corrette, quizQuestions.length, percentuale);
-    
-    alert(`Quiz completato! 🎉\n\nRisposte corrette: ${corrette} su ${quizQuestions.length}\nPunteggio: ${percentuale}%\n\nIl risultato è stato salvato!`);
-    goBack();
-  }
-}
-</script>
 
+</script>
 </body>
 </html>
