@@ -990,26 +990,28 @@ setInterval(updateSubjectCounts, 500);
 
 let selected = [];
 
-function updateSubjectCounts() {
-  // Salva quali materie sono selezionate PRIMA di aggiornare
-  const selectedSubjects = [];
-  document.querySelectorAll("#materie .card.selected").forEach(card => {
-    const fullText = card.innerText;
-    const name = fullText.split(" (")[0];
-    selectedSubjects.push(name);
-  });
-  
-  // Aggiorna i conteggi
+function initializeCardClickHandlers() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    const fullText = card.innerText;
-    const name = fullText.split(" (")[0];
-    const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
-    
-    // Ripristina la selezione
-    if (selectedSubjects.includes(name)) {
-      card.classList.add("selected");
-    }
+    const newCard = card.cloneNode(true);
+    card.parentNode.replaceChild(newCard, card);
+  });
+
+  document.querySelectorAll("#materie .card").forEach(card => {
+    card.addEventListener("click", function() {
+      const cardName = this.innerText.split(" (")[0];
+      
+      if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        selected = selected.filter(t => t !== cardName);
+      } else {
+        if (selected.length < 6) {
+          this.classList.add("selected");
+          selected.push(cardName);
+        }
+      }
+      
+      updateStartButton();
+    });
   });
 }
 
