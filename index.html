@@ -994,10 +994,9 @@ function initializeCardClickHandlers() {
   document.querySelectorAll("#materie .card").forEach(card => {
     const newCard = card.cloneNode(true);
     card.parentNode.replaceChild(newCard, card);
-  });
-
-  document.querySelectorAll("#materie .card").forEach(card => {
-    card.addEventListener("click", function() {
+    
+    newCard.addEventListener("click", function(e) {
+      e.stopPropagation();
       const cardName = this.innerText.split(" (")[0];
       
       if (this.classList.contains("selected")) {
@@ -1009,6 +1008,11 @@ function initializeCardClickHandlers() {
           selected.push(cardName);
         }
       }
+      
+      updateStartButton();
+    });
+  });
+}
       
       updateStartButton();
     });
