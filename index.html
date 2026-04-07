@@ -1499,6 +1499,20 @@ function searchSite() {
     alert("Funzionalità di ricerca in sviluppo. Cercavi: " + searchTerm);
   }
 }
+  // MIGLIORAMENTI PER DISPOSITIVI MOBILE
+document.addEventListener('touchstart', function() {}, { passive: true });
+
+// Aggiungi feedback tattile per i pulsanti
+const allButtons = document.querySelectorAll('.card, .menu-item, .start-btn, .btn-back, .btn-next, .clear-btn');
+allButtons.forEach(btn => {
+  btn.addEventListener('touchstart', function() {
+    this.style.transform = 'scale(0.98)';
+  });
+  btn.addEventListener('touchend', function() {
+    this.style.transform = '';
+  });
+});
+  
 
 </script>
 </body>
