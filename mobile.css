@@ -1,12 +1,14 @@
 /* ===== REGOLE PER TELEFONO ===== */
 @media (max-width: 768px) {
-  .materie-grid {
+  
+  /* Forza 3 colonne */
+  body .materie-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 13px !important;
   }
   
-  #materie .card {
+  body #materie .card {
     width: 100% !important;
     font-size: 11px !important;
     padding: 6px 2px !important;
@@ -14,64 +16,85 @@
     height: auto !important;
   }
   
-  header {
+  /* Header */
+  body header {
     flex-direction: column !important;
     gap: 12px !important;
   }
   
-  .left-header {
+  body .left-header {
     width: 100% !important;
     flex-direction: column !important;
     align-items: center !important;
   }
   
-  .title {
+  body .title {
     font-size: 26px !important;
     text-align: center !important;
   }
   
-  .menu {
+  body .menu {
     width: 100% !important;
     justify-content: center !important;
   }
   
-  .header-right {
+  body .header-right {
     width: 100% !important;
     justify-content: center !important;
   }
   
-  .card {
+  /* Card home */
+  body .card {
     width: 200px !important;
     height: 110px !important;
     font-size: 14px !important;
   }
   
-  #home .card {
+  body #home .card {
     width: 280px !important;
   }
   
-  .config-box {
+  /* Config box */
+  body .config-box {
     width: 220px !important;
   }
   
-  .quiz-container {
+  /* Quiz */
+  body .quiz-container {
     padding: 20px !important;
     margin: 0 15px !important;
   }
   
-  .option {
+  body .option {
     padding: 10px !important;
     font-size: 13px !important;
   }
   
-  .option-letter {
+  body .option-letter {
     width: 25px !important;
     height: 25px !important;
     font-size: 12px !important;
   }
   
-  .btn-back, .btn-next {
+  body .btn-back, body .btn-next {
     padding: 8px 20px !important;
     font-size: 14px !important;
+  }
+  
+  /* Bottone inizia quiz */
+  body .materie-wrapper {
+    position: relative !important;
+    padding-top: 20px !important;
+  }
+  
+  body #startQuizBtn {
+    position: absolute !important;
+    top: 5px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 240px !important;
+    font-size: 24px !important;
+    padding: 10px 0 !important;
+    z-index: 5 !important;
   }
 }
