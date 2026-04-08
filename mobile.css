@@ -44,6 +44,20 @@
     width: 100%;
   }
 
+  .materie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+}
+
+#materie .card {
+  width: 100%;
+  font-size: 11px;
+  padding: 6px 2px;
+  min-height: 40px;
+  height: auto;
+}
+  
   /* SISTEMA IL BOTTONE */
   .materie-wrapper {
     position: relative;
