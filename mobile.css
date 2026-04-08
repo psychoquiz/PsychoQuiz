@@ -1,158 +1,77 @@
-/* ===== REGOLE PER TELEFONO (max-width: 768px) ===== */
+/* ===== REGOLE PER TELEFONO ===== */
 @media (max-width: 768px) {
+  .materie-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 13px !important;
+  }
+  
+  #materie .card {
+    width: 100% !important;
+    font-size: 11px !important;
+    padding: 6px 2px !important;
+    min-height: 40px !important;
+    height: auto !important;
+  }
+  
   header {
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px 15px;
+    flex-direction: column !important;
+    gap: 12px !important;
   }
   
   .left-header {
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
   
   .title {
     font-size: 26px !important;
-    text-align: center;
-    text-shadow: 2px 2px 0 #6b3e2e;
+    text-align: center !important;
   }
   
   .menu {
-    width: 100%;
-    justify-content: center;
-    gap: 15px;
+    width: 100% !important;
+    justify-content: center !important;
   }
   
   .header-right {
-    width: 100%;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 5px;
+    width: 100% !important;
+    justify-content: center !important;
   }
   
   .card {
-    width: 200px;
-    height: 110px;
-    font-size: 14px;
-  }
-  
-  .subtitle {
-    font-size: 10px;
-  }
-  
-  /* 3 colonne per le materie - PARTE IMPORTANTE */
-  .materie-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 13px;
-  }
-  
-  #materie .card {
-    width: 100%;
-    font-size: 11px;
-    padding: 6px 2px;
-    min-height: 40px;
-    height: auto;
-  }
-  
-  .config-box {
-    width: 220px;
-    padding: 15px;
-  }
-  
-  .quiz-container {
-    padding: 20px;
-    margin: 0 15px;
-  }
-  
-  .question-text {
-    font-size: 16px;
-  }
-  
-  .option {
-    padding: 10px;
-    font-size: 13px;
-  }
-  
-  .option-letter {
-    width: 25px;
-    height: 25px;
-    font-size: 12px;
-  }
-  
-  .btn-back, .btn-next {
-    padding: 8px 20px;
-    font-size: 14px;
-  }
-  
-  .results-list {
-    width: 95%;
-  }
-  
-  .stat-card {
-    padding: 10px 15px;
-    min-width: 80px;
-  }
-  
-  .stat-value {
-    font-size: 24px;
-  }
-  
-  .materie-wrapper {
-    position: relative;
-    padding-top: 20px;
-  }
-  
-  #startQuizBtn {
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 240px;
-    font-size: 24px;
-    padding: 10px 0;
-    margin: 0;
-    z-index: 5;
+    width: 200px !important;
+    height: 110px !important;
+    font-size: 14px !important;
   }
   
   #home .card {
-    width: 280px;
-    font-size: 18px;
+    width: 280px !important;
   }
   
-  #home .subtitle {
-    font-size: 13px;
-  }
-}
-
-/* Telefoni molto piccoli */
-@media (max-width: 480px) {
-  #materie .card {
-    font-size: 10px;
-  }
-  
-  .card {
-    width: 170px;
-    height: 95px;
-    font-size: 12px;
-  }
-  
-  .title {
-    font-size: 22px !important;
+  .config-box {
+    width: 220px !important;
   }
   
   .quiz-container {
-    padding: 15px;
-  }
-  
-  .question-text {
-    font-size: 14px;
+    padding: 20px !important;
+    margin: 0 15px !important;
   }
   
   .option {
-    padding: 8px;
-    font-size: 12px;
+    padding: 10px !important;
+    font-size: 13px !important;
+  }
+  
+  .option-letter {
+    width: 25px !important;
+    height: 25px !important;
+    font-size: 12px !important;
+  }
+  
+  .btn-back, .btn-next {
+    padding: 8px 20px !important;
+    font-size: 14px !important;
   }
 }
