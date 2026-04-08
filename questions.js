@@ -51,7 +51,7 @@ const questionsBySubject = {
     }
   ],
 
-   "Psicofarmacologia": [
+  "Psicofarmacologia": [
     {
       domanda: "In riferimento all'autismo, quali farmaci possono essere impiegati per la gestione sintomatologica quale iperattività, comportamenti aggressivi auto e/o etero diretti, alterazione dell'umore e irritabilità e ansia?",
       risposte: [
@@ -64,7 +64,7 @@ const questionsBySubject = {
       difficolta: "facile"
     }
   ],
-  
+
   "Psicologia dello sviluppo": [],
   "Psicobiologia": [],
   "Psicologia Clinica": [],
