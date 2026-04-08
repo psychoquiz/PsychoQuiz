@@ -659,10 +659,15 @@ select {
     
     <div class="options" id="optionsContainer"></div>
 
-    <div class="quiz-buttons">
-      <button class="btn-back" onclick="goBack()">Indietro</button>
-      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima</button>
-    </div>
+   <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+  <button class="btn-spiegazione" id="btnSpiegazione" onclick="showSpiegazione()" style="display: none; background: #e6879c; color: #6b3e2e; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; border: none;">Spiegazione</button>
+  <div class="quiz-buttons">
+    <button class="btn-back" onclick="goBack()">Indietro</button>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">Prossima</button>
+  </div>
+</div>
+
+    
   </div>
 </div>
 
@@ -890,6 +895,7 @@ function loadQuestion() {
     optionsContainer.appendChild(option);
   });
 
+  document.getElementById("btnSpiegazione").style.display = "none";
   document.getElementById("btnNext").classList.remove("show");
   
   const savedAnswer = userAnswers[currentQuestionIndex];
@@ -931,9 +937,17 @@ function selectAnswer(answerIndex, optionElement) {
     }
   });
 
+  // 👇 AGGIUNGI QUESTA RIGA QUI, prima dell'ultima parentesi
+  document.getElementById("btnSpiegazione").style.display = "inline-block";
+}
   document.getElementById("btnNext").classList.add("show");
 }
 
+  function showSpiegazione() {
+  const question = quizQuestions[currentQuestionIndex];
+  alert(`📖 Spiegazione:\n\n${question.spiegazione || "Nessuna spiegazione disponibile per questa domanda."}`);
+}
+  
 // FUNZIONI PER I RISULTATI
 function saveResult(corrette, totali, percentuale) {
   let risultati = localStorage.getItem("psychoquiz_results");
