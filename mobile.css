@@ -9,38 +9,41 @@
     position: relative;
   }
 
-  /* RIGA 1: lingua - titolo - lente */
-  .header-top {
+  /* RIGA 1: lingua (sinistra) + titolo (centro) + lente (destra) */
+  .header-right {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: relative; /* IMPORTANTISSIMO: tolto absolute */
+    top: auto;
+    left: auto;
     padding: 0 10px;
   }
 
-  /* LINGUA A SINISTRA */
+  /* LINGUA */
   .language {
     font-size: 13px;
     padding: 4px 8px;
-    order: 1;
+    display: flex;
+    align-items: center;
   }
 
-  /* TITOLO CENTRATO */
+  /* TITOLO CENTRATO (sta nella stessa riga ma centrato visivamente) */
   .title {
     font-size: 28px;
     text-align: center;
     flex: 1;
-    order: 2;
   }
 
-  /* LENTE A DESTRA */
+  /* LENTE */
   .search-icon {
     font-size: 18px;
-    order: 3;
+    display: flex;
+    align-items: center;
   }
 
-  /* MENU SOTTO IL TITOLO */
+  /* MENU SOTTO */
   .menu {
     width: 100%;
     display: flex;
@@ -55,11 +58,7 @@
     padding: 6px 12px;
   }
 
-  /* SE ESISTE VECCHIA STRUTTURA, NASCONDI O NEUTRALIZZA */
-  .header-right {
-    display: none;
-  }
-
+  /* NON NASCONDERE PIÙ NULLA */
   .left-header {
     display: flex;
     flex-direction: column;
