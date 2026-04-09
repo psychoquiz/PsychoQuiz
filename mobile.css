@@ -9,33 +9,40 @@
     position: relative;
   }
 
-  /* TOP BAR (lingua + lente) */
-  .header-right {
+  /* RIGA 1: lingua - titolo - lente */
+  .header-top {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    padding: 0 15px;
-  }
-
-  /* NASCONDI STRUTTURA ORIGINALE */
-  .left-header {
-    flex-direction: column;
     align-items: center;
-    gap: 5px;
+    position: relative;
+    padding: 0 10px;
   }
 
-  /* TITOLO */
+  /* LINGUA A SINISTRA */
+  .language {
+    font-size: 13px;
+    padding: 4px 8px;
+    order: 1;
+  }
+
+  /* TITOLO CENTRATO */
   .title {
     font-size: 28px;
     text-align: center;
-    margin-top: 30px;
+    flex: 1;
+    order: 2;
+  }
+
+  /* LENTE A DESTRA */
+  .search-icon {
+    font-size: 18px;
+    order: 3;
   }
 
   /* MENU SOTTO IL TITOLO */
   .menu {
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -48,15 +55,14 @@
     padding: 6px 12px;
   }
 
-  /* SISTEMA LINGUA */
-  .language {
-    font-size: 13px;
-    padding: 4px 8px;
+  /* SE ESISTE VECCHIA STRUTTURA, NASCONDI O NEUTRALIZZA */
+  .header-right {
+    display: none;
   }
 
-  /* SISTEMA ICONA SEARCH */
-  .search-icon {
-    font-size: 18px;
+  .left-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-
 }
