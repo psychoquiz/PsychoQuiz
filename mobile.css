@@ -1,76 +1,62 @@
 @media (max-width: 768px) {
 
-  /* HEADER */
+  /* HEADER GENERALE */
   header {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-  }
-
-  .title {
-    font-size: 26px;
-  }
-
-  .menu {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  /* HOME CARD */
-  .card {
-    width: 90%;
-    height: auto;
-    padding: 20px;
-  }
-
-  /* MATERIE GRID */
-  .materie-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #materie .card {
-    width: 90%;
-    height: auto;
-    font-size: 14px;
-  }
-
-  /* QUIZ */
-  .quiz-container {
-    padding: 20px;
-    width: 95%;
-  }
-
-  .question-text {
-    font-size: 18px;
-  }
-
-  .option {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  /* BOTTONI */
-  .btn-next,
-  .btn-back {
-    width: 100%;
-    font-size: 14px;
     padding: 10px;
+    position: relative;
   }
 
-  .quiz-buttons {
-    flex-direction: column;
+  /* TOP BAR (lingua + lente) */
+  .header-right {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    padding: 0 15px;
   }
 
-  /* CONFIG */
-  .config-box {
-    width: 90%;
+  /* NASCONDI STRUTTURA ORIGINALE */
+  .left-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
   }
 
-  /* RISULTATI */
-  .results-list {
-    width: 95%;
+  /* TITOLO */
+  .title {
+    font-size: 28px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  /* MENU SOTTO IL TITOLO */
+  .menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* SISTEMA LINGUA */
+  .language {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+
+  /* SISTEMA ICONA SEARCH */
+  .search-icon {
+    font-size: 18px;
   }
 
 }
