@@ -43,17 +43,7 @@
   margin-top: 80px; /* 🔥 aumentato */
   flex-wrap: wrap;
 }
-
-  /* MENU SOTTO IL TITOLO */
-  .menu {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 60px;
-    flex-wrap: wrap;
-  }
-
+  
   .menu-item {
     font-size: 13px;
     padding: 5px 10px;
