@@ -1,67 +1,65 @@
 @media (max-width: 768px) {
 
-  /* HEADER GENERALE */
   header {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
+  }
+
+  /* 🔥 CREIAMO UNA RIGA UNICA ORIZZONTALE HEADER */
+  header {
+    flex-direction: column;
+  }
+
+  /* trasformiamo tutto in una sola riga controllata */
+  header {
     position: relative;
   }
 
-  /* RIGA 1: lingua (sinistra) + titolo (centro) + lente (destra) */
+  /* RIGA UNICA SUPERIORE */
+  header::before {
+    content: "";
+    display: block;
+  }
+
+  /* LEFT + RIGHT diventano invisibili come struttura */
+  .left-header,
   .header-right {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; /* IMPORTANTISSIMO: tolto absolute */
-    top: auto;
-    left: auto;
-    padding: 0 10px;
+    display: contents;
   }
 
-  /* LINGUA */
+  /* 🔥 ORDINAMENTO VISIVO PERFETTO */
   .language {
+    position: absolute;
+    left: 10px;
+    top: 10px;
     font-size: 13px;
-    padding: 4px 8px;
-    display: flex;
-    align-items: center;
   }
 
-  /* TITOLO CENTRATO (sta nella stessa riga ma centrato visivamente) */
-  .title {
-    font-size: 28px;
-    text-align: center;
-    flex: 1;
-  }
-
-  /* LENTE */
   .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
     font-size: 18px;
-    display: flex;
-    align-items: center;
+  }
+
+  .title {
+    text-align: center;
+    width: 100%;
+    font-size: 28px;
+    margin-top: 5px;
   }
 
   /* MENU SOTTO */
   .menu {
     width: 100%;
-    display: flex;
     justify-content: center;
-    gap: 10px;
     margin-top: 10px;
-    flex-wrap: wrap;
   }
 
   .menu-item {
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-
-  /* NON NASCONDERE PIÙ NULLA */
-  .left-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-size: 13px;
+    padding: 5px 10px;
   }
 }
