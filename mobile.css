@@ -73,14 +73,13 @@
   padding: 10px;
 }
 
-/* CARD PIÙ PICCOLE */
 #home .card {
-  width: 90%;
-  max-width: 320px;
-  height: 90px;
-  font-size: 15px;
-  padding: 8px;
-  border-radius: 14px;
+  width: 90% !important;
+  max-width: 320px !important;
+  height: 80px !important;
+  font-size: 14px !important;
+  padding: 6px !important;
+  border-radius: 14px !important;
 }
 
 /* TESTO SECONDARIO PIÙ COMPATTO */
