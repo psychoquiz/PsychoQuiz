@@ -796,7 +796,7 @@ function updateSubjectCounts() {
     const fullText = card.innerText;
     const name = fullText.split(" (")[0];
     const count = questionsBySubject[name]?.length || 0;
-    card.innerText = `${name} (${count})`;
+    card.innerHTML = `${name} <span class="count">(${count})</span>`;
   });
 }
 
