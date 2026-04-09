@@ -806,11 +806,6 @@ let selected = [];
 
 function initializeCardClickHandlers() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    const newCard = card.cloneNode(true);
-    card.parentNode.replaceChild(newCard, card);
-  });
-
-  document.querySelectorAll("#materie .card").forEach(card => {
     card.addEventListener("click", function() {
       const cardName = this.innerText.split(" (")[0];
       
