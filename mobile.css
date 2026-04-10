@@ -5,87 +5,97 @@
     position: relative;
     display: block;
     padding: 5px 10px;
+    min-height: 70px;  /* Altezza minima per evitare sovrapposizioni */
   }
 
-  /* 🔵 LINGUA (SINISTRA) */
+  /* LINGUA (SINISTRA) */
   .language {
     position: absolute;
     left: 10px;
     top: 10px;
     font-size: 13px;
     padding: 4px 8px;
+    z-index: 20;
   }
 
-  /* 🔵 LENTE (DESTRA) */
+  /* LENTE (DESTRA) */
   .search-icon {
     position: absolute;
     right: 10px;
     top: 10px;
     font-size: 18px;
+    z-index: 20;
   }
 
-.title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 10px;
-  font-size: 28px;
-  white-space: nowrap;
-  margin: 0;
-}
+  .title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    font-size: 28px;
+    white-space: nowrap;
+    margin: 0;
+    pointer-events: none;  /* 🔥 Il titolo NON blocca i click */
+    z-index: 1;
+  }
 
-/* 🔥 CREA SPAZIO REALE PER EVITARE SOVRAPPOSIZIONE */
-.menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 60px; /* 🔥 aumentato */
-  flex-wrap: wrap;
-}
+  /* MENU */
+  .menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 5;
+  }
   
   .menu-item {
     font-size: 13px;
     padding: 5px 10px;
   }
 
-  /* HEADER RIGHT NON SERVE SU MOBILE */
   .header-right {
     display: contents;
   }
 
-  /* LEFT HEADER NON DEVE BLOCCARE IL LAYOUT */
   .left-header {
     display: contents;
   }
 
-  /* ICONA LOGO (Ψ) */
   .icon {
     font-size: 30px;
   }
-  /* HOME IN COLONNA COMPATTA */
-#home {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  gap: 13px;
-  margin-top: 40px;
-  padding: 10px;
-}
 
-#home .card {
-  width: 70% !important;
-  max-width: 320px !important;
-  height: 100px !important;
-  font-size: 14px !important;
-  padding: 6px !important;
-  border-radius: 14px !important;
-}
+  /* HOME - LE CARD DEVONO ESSERE CLICCABILI */
+  #home {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    margin-top: 20px;  /* Ridotto perché ora c'è spazio */
+    padding: 10px;
+    position: relative;
+    z-index: 5;
+  }
 
-/* TESTO SECONDARIO PIÙ COMPATTO */
-#home .subtitle {
-  font-size: 11px;
-  margin-top: 3px;
-  line-height: 1.2;
-}
+  #home .card {
+    width: 70% !important;
+    max-width: 320px !important;
+    height: 100px !important;
+    font-size: 14px !important;
+    padding: 6px !important;
+    border-radius: 14px !important;
+    position: relative;
+    z-index: 6;
+    cursor: pointer;  /* Assicura che sia visibile il puntatore */
+  }
+
+  /* TESTO SECONDARIO PIÙ COMPATTO */
+  #home .subtitle {
+    font-size: 11px;
+    margin-top: 3px;
+    line-height: 1.2;
+  }
 }
