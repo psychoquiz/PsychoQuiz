@@ -789,29 +789,25 @@ function goBack() {
     currentQuestionIndex--;
     loadQuestion();
   }
-}
-
+  
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    let name = card.getAttribute("data-name");
-    if (!name) {
-      const fullText = card.innerText;
-      name = fullText.split(" (")[0];
-      card.setAttribute("data-name", name);
+    if (!card.hasAttribute("data-original-name")) {
+      const originalText = card.innerText.trim();
+      const name = originalText.split(" (")[0];
+      card.setAttribute("data-original-name", name);
     }
-    const count = (window.questionsBySubject && questionsBySubject[name]) ? questionsBySubject[name].length : 0;
     
-    let countSpan = card.querySelector(".count");
-    if (countSpan) {
-      countSpan.textContent = `(${count})`;
-    } else {
-      card.innerHTML = `${name} <span class="count">(${count})</span>`;
-    }
+    const name = card.getAttribute("data-original-name");
+    const count = (window.questionsBySubject && questionsBySubject[name]) ? questionsBySubject[name].length : 0;
+    card.innerText = `${name} (${count})`;
   });
 }
 
-// Poi chiamala una volta sola:
+// Chiamata una sola volta all'avvio
 updateSubjectCounts();
+
+// NON usare setInterval!
 
 
 let selected = [];
