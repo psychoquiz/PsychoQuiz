@@ -792,17 +792,14 @@ function goBack() {
   
 function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    if (!card.hasAttribute("data-original-name")) {
-      const originalText = card.innerText.trim();
-      const name = originalText.split(" (")[0];
-      card.setAttribute("data-original-name", name);
-    }
-    
-    const name = card.getAttribute("data-original-name");
-    const count = (window.questionsBySubject && questionsBySubject[name]) ? questionsBySubject[name].length : 0;
-    card.innerText = `${name} (${count})`;
+    const fullText = card.innerText;
+    const name = fullText.split(" (")[0];
+    const count = questionsBySubject[name]?.length || 0;
+    card.innerHTML = `${name} <span class="count">(${count})</span>`;
   });
 }
+
+setInterval(updateSubjectCounts, 500);
 
 // Chiamata una sola volta all'avvio
 updateSubjectCounts();
