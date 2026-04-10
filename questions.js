@@ -37,6 +37,11 @@ const questionsBySubject = {
     }
   ],
 
+
+  
+  
+  
+  
   "Psicologia sociale": [
     {
       domanda: "Cosa studia la psicologia sociale?",
@@ -51,6 +56,10 @@ const questionsBySubject = {
     }
   ],
 
+
+  
+  
+  
   "Psicofarmacologia": [
     {
       domanda: "In riferimento all'autismo, quali farmaci possono essere impiegati per la gestione sintomatologica quale iperattività, comportamenti aggressivi auto e/o etero diretti, alterazione dell'umore e irritabilità e ansia?",
@@ -65,6 +74,32 @@ const questionsBySubject = {
     }
   ],
 
+
+  
+  
+  
+  
+  
+  "Neurobiologia dei disturbi psichici": [
+     {
+      domanda: " Perchè il cortisolo non riesce a inibire efficacemente l'asse Ipotalamo-ipofisi-surrene (HPA) nella depressione maggiore?",
+      risposte: [
+        "Per una downregulation e/o alterata funzionalità dei recettori glucocorticoidi (GR), in particolare a livello ippocampale",
+        "Per un'aumentata sensibilità dei recettori mineralcorticoidi (MR), che determina una soppressione eccessiva dell'asse HPA",
+        "Per una riduzione primaria della secrezione di CRH ipotalamico, che altera la dinamica di attivazione dell'asse",
+        "Per un incremento della trasmissione serotoninergica che potenzia direttamente l'inibizione ipofisaria"
+      ],
+      corretta: 0,
+      difficolta: "facile"
+    }
+  ],
+  
+    
+ 
+  
+  
+  
+  
   "Psicologia dello sviluppo": [],
   "Psicobiologia": [],
   "Psicologia Clinica": [],
