@@ -789,22 +789,31 @@ function goBack() {
     currentQuestionIndex--;
     loadQuestion();
   }
-  
-function updateSubjectCounts() {
+
+  function updateSubjectCounts() {
   document.querySelectorAll("#materie .card").forEach(card => {
-    const fullText = card.innerText;
-    const name = fullText.split(" (")[0];
+    // Prende il testo originale senza numeri
+    let name = card.getAttribute("data-name");
+    if (!name) {
+      name = card.innerText.replace(/\(\d+\)/, '').trim();
+      card.setAttribute("data-name", name);
+    }
+    
     const count = questionsBySubject[name]?.length || 0;
-    card.innerHTML = `${name} <span class="count">(${count})</span>`;
+    
+    // Sostituisce o aggiunge il numero
+    const currentText = card.innerText;
+    if (currentText.includes("(")) {
+      card.innerText = `${name} (${count})`;
+    } else {
+      card.innerText = `${name} (${count})`;
+    }
   });
 }
 
+// Mantieni setInterval
 setInterval(updateSubjectCounts, 500);
 
-// Chiamata una sola volta all'avvio
-updateSubjectCounts();
-
-// NON usare setInterval!
 
 
 let selected = [];
